@@ -9,8 +9,12 @@ import type {
   ApiErrorResponse,
 } from '../../shared/analysis.js'
 import { requireAuth } from '../auth/requireAuth.js'
+import {
+  getQwenContextGateConfig,
+  validateOccurrencesWithQwen,
+} from '../llm/qwenClient.js'
 import { loadDictionary } from '../terminology/loadDictionary.js'
-import { matchTerms } from '../terminology/matchTerms.js'
+import { findTermOccurrences, groupTermOccurrences } from '../terminology/matchTerms.js'
 import {
   extractTranscript,
   TranscriptExtractionError,
@@ -69,7 +73,33 @@ analyzeTranscriptRouter.post(
       }
 
       const terms = await loadDictionary()
-      const results = matchTerms(transcript, terms)
+      const contextGate = getQwenContextGateConfig()
+      const occurrences = findTermOccurrences(transcript, terms, {
+        includeContextRequired: contextGate != null,
+      })
+
+      let acceptedOccurrences = occurrences
+      if (contextGate) {
+        try {
+          acceptedOccurrences = (
+            await validateOccurrencesWithQwen(occurrences, contextGate)
+          ).accepted
+        } catch (error) {
+          console.error(
+            'Qwen Context Gate failed:',
+            error instanceof Error ? error.message : 'unknown error',
+          )
+          sendError(
+            response,
+            503,
+            'CONTEXT_VALIDATION_UNAVAILABLE',
+            '文脈判定AIに接続できません。接続を確認してから再試行してください。',
+          )
+          return
+        }
+      }
+
+      const results = groupTermOccurrences(acceptedOccurrences)
       const body: AnalyzeTranscriptResponse = {
         success: true,
         file: {

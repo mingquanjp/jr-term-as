@@ -1,6 +1,6 @@
 # JR Term Assistant
 
-JR西日本の会議トランスクリプトから、レビュー済み辞書に登録された社内用語・略称を検出し、正式名称と意味を表示するローカルWebアプリです。現在のフェーズは `Exact` 一致のみを扱い、LLM・外部AI・外部ストレージは使用しません。
+JR西日本の会議トランスクリプトから、レビュー済み辞書に登録された社内用語・略称を検出し、正式名称と意味を表示するローカルWebアプリです。通常は `Exact` 一致のみを扱い、任意でローカルGPU上のQwenによる文脈判定（Context Gate）を有効化できます。外部ストレージは使用しません。
 
 ## Architecture
 
@@ -40,6 +40,28 @@ pnpm dev
 
 - Frontend: `http://127.0.0.1:5173`
 - API: `http://127.0.0.1:3001`
+
+### Optional: Qwen Context Gate
+
+The Context Gate keeps the JR-reviewed dictionary as the source of truth and uses
+Qwen only to decide whether a matched occurrence is actually used with that
+meaning in its surrounding utterances. `reject` and `uncertain` results are not
+returned to the UI.
+
+1. Keep the SSH tunnel to the Qwen/vLLM server running on local port `18000`.
+2. Copy `.env.example` to `.env.local` and set:
+
+```dotenv
+QWEN_CONTEXT_GATE=true
+QWEN_API_KEY=local-vllm
+QWEN_CONTEXT_GATE_MODE=risky
+```
+
+3. Start `pnpm dev` as usual.
+
+`risky` validates `Context Required` variants and short forms (for example,
+`うや` and `とけ`). `all` validates every matched occurrence and is the more
+conservative option for a stakeholder demo.
 
 To choose the initial admin credentials instead of generating a password:
 

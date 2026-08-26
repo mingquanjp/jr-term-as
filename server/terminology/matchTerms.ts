@@ -1,13 +1,31 @@
 import type { AnalysisResult } from '../../shared/analysis.js'
 import { extractContextSentence } from '../transcript/extractContextSentence.js'
+import {
+  extractContextWindow,
+  isTranscriptMetadataOccurrence,
+  type ContextWindow,
+} from '../transcript/extractContextWindow.js'
 import { normalizeText, normalizeTextWithMap } from '../transcript/normalizeText.js'
-import type { TermEntry } from './types.js'
+import type { MatchType, TermEntry } from './types.js'
 
 type MatchCandidate = {
   term: TermEntry
   normalizedVariant: string
+  matchType: MatchType
   startsWithLatinAlphanumeric: boolean
   endsWithLatinAlphanumeric: boolean
+}
+
+export type TermMatchOccurrence = {
+  termId: string
+  canonicalTerm: string
+  meaning: string
+  displayTerm: string
+  matchedVariant: string
+  matchType: MatchType
+  originalIndex: number
+  contextSentence: string
+  contextWindow: ContextWindow
 }
 
 type MutableResult = AnalysisResult & {
@@ -33,19 +51,28 @@ function originalSlice(
   return originalText.slice(originalStart, originalEnd)
 }
 
-export function matchTerms(transcript: string, terms: TermEntry[]): AnalysisResult[] {
+export function findTermOccurrences(
+  transcript: string,
+  terms: TermEntry[],
+  options: { includeContextRequired?: boolean } = {},
+): TermMatchOccurrence[] {
   const normalized = normalizeTextWithMap(transcript)
   const candidates: MatchCandidate[] = terms
     .flatMap((term) =>
       term.variants.flatMap((variant) => {
-        // Context Required and blank Match_Type entries are intentionally skipped.
-        if (variant.matchType !== 'Exact') return []
+        if (
+          variant.matchType !== 'Exact' &&
+          !(options.includeContextRequired && variant.matchType === 'Context Required')
+        ) {
+          return []
+        }
         const normalizedVariant = normalizeText(variant.value)
-        if (!normalizedVariant) return []
+        if (!normalizedVariant || !variant.matchType) return []
         return [
           {
             term,
             normalizedVariant,
+            matchType: variant.matchType,
             startsWithLatinAlphanumeric: /^[a-z0-9]/i.test(normalizedVariant),
             endsWithLatinAlphanumeric: /[a-z0-9]$/i.test(normalizedVariant),
           },
@@ -57,7 +84,7 @@ export function matchTerms(transcript: string, terms: TermEntry[]): AnalysisResu
     )
 
   const occupied = new Uint8Array(normalized.normalizedText.length)
-  const groupedResults = new Map<string, MutableResult>()
+  const occurrences: TermMatchOccurrence[] = []
 
   for (const candidate of candidates) {
     let searchFrom = 0
@@ -90,46 +117,60 @@ export function matchTerms(transcript: string, terms: TermEntry[]): AnalysisResu
         }
       }
       if (overlaps) continue
-      occupied.fill(1, matchIndex, matchEnd)
 
+      const originalIndex = normalized.originalIndexes[matchIndex] ?? matchIndex
+      if (isTranscriptMetadataOccurrence(normalized.originalText, originalIndex))
+        continue
+
+      occupied.fill(1, matchIndex, matchEnd)
       const displayTerm = originalSlice(
         normalized.originalText,
         normalized.originalIndexes,
         matchIndex,
         candidate.normalizedVariant.length,
       )
-      const originalIndex = normalized.originalIndexes[matchIndex] ?? matchIndex
-      let result = groupedResults.get(candidate.term.termId)
-      if (!result) {
-        result = {
-          termId: candidate.term.termId,
-          displayTerm,
-          canonicalTerm: candidate.term.canonicalTerm,
-          meaning: candidate.term.meaning,
-          contextSentence: extractContextSentence(
-            normalized.originalText,
-            originalIndex,
-          ),
-          matchedVariants: [],
-          matchedVariantIndexes: new Map<string, number>(),
-          occurrenceCount: 0,
-          firstOccurrenceIndex: originalIndex,
-        }
-        groupedResults.set(candidate.term.termId, result)
-      }
+      occurrences.push({
+        termId: candidate.term.termId,
+        canonicalTerm: candidate.term.canonicalTerm,
+        meaning: candidate.term.meaning,
+        displayTerm,
+        matchedVariant: candidate.normalizedVariant,
+        matchType: candidate.matchType,
+        originalIndex,
+        contextSentence: extractContextSentence(normalized.originalText, originalIndex),
+        contextWindow: extractContextWindow(normalized.originalText, originalIndex),
+      })
+    }
+  }
 
-      result.occurrenceCount += 1
-      if (!result.matchedVariantIndexes.has(displayTerm)) {
-        result.matchedVariantIndexes.set(displayTerm, originalIndex)
+  return occurrences.sort((left, right) => left.originalIndex - right.originalIndex)
+}
+
+export function groupTermOccurrences(
+  occurrences: TermMatchOccurrence[],
+): AnalysisResult[] {
+  const groupedResults = new Map<string, MutableResult>()
+
+  for (const occurrence of occurrences) {
+    let result = groupedResults.get(occurrence.termId)
+    if (!result) {
+      result = {
+        termId: occurrence.termId,
+        displayTerm: occurrence.displayTerm,
+        canonicalTerm: occurrence.canonicalTerm,
+        meaning: occurrence.meaning,
+        contextSentence: occurrence.contextSentence,
+        matchedVariants: [],
+        matchedVariantIndexes: new Map<string, number>(),
+        occurrenceCount: 0,
+        firstOccurrenceIndex: occurrence.originalIndex,
       }
-      if (originalIndex < result.firstOccurrenceIndex) {
-        result.firstOccurrenceIndex = originalIndex
-        result.displayTerm = displayTerm
-        result.contextSentence = extractContextSentence(
-          normalized.originalText,
-          originalIndex,
-        )
-      }
+      groupedResults.set(occurrence.termId, result)
+    }
+
+    result.occurrenceCount += 1
+    if (!result.matchedVariantIndexes.has(occurrence.displayTerm)) {
+      result.matchedVariantIndexes.set(occurrence.displayTerm, occurrence.originalIndex)
     }
   }
 
@@ -147,4 +188,9 @@ export function matchTerms(transcript: string, terms: TermEntry[]): AnalysisResu
       occurrenceCount: result.occurrenceCount,
       firstOccurrenceIndex: result.firstOccurrenceIndex,
     }))
+}
+
+/** Existing exact-only API used when the Context Gate is disabled. */
+export function matchTerms(transcript: string, terms: TermEntry[]): AnalysisResult[] {
+  return groupTermOccurrences(findTermOccurrences(transcript, terms))
 }
