@@ -1,22 +1,23 @@
 import ExcelJS from 'exceljs'
 import { Router } from 'express'
 
-import type { AnalysisResult } from '../../shared/analysis.js'
+import type { TranscriptAnalysisResult } from '../../shared/analysis.js'
 import { requireAuth } from '../auth/requireAuth.js'
 
 const MAX_RESULTS = 500
 
 type ExportRequest = {
-  fileName?: unknown
+  fileNames?: unknown
   analyzedAt?: unknown
   results?: unknown
 }
 
-function isAnalysisResult(value: unknown): value is AnalysisResult {
+function isAnalysisResult(value: unknown): value is TranscriptAnalysisResult {
   if (!value || typeof value !== 'object') return false
-  const result = value as Partial<AnalysisResult>
+  const result = value as Partial<TranscriptAnalysisResult>
   return (
     typeof result.termId === 'string' &&
+    typeof result.transcriptName === 'string' &&
     typeof result.displayTerm === 'string' &&
     typeof result.canonicalTerm === 'string' &&
     typeof result.meaning === 'string' &&
@@ -46,6 +47,10 @@ exportResultsRouter.post('/', requireAuth, async (request, response, next) => {
   }
 
   try {
+    const fileNames = Array.isArray(body.fileNames)
+      ? body.fileNames.filter((name): name is string => typeof name === 'string')
+      : []
+    const includesTranscriptColumn = fileNames.length > 1
     const workbook = new ExcelJS.Workbook()
     workbook.creator = 'JR Term Assistant'
     workbook.created = new Date()
@@ -53,7 +58,7 @@ exportResultsRouter.post('/', requireAuth, async (request, response, next) => {
       views: [{ state: 'frozen', ySplit: 3 }],
     })
 
-    sheet.mergeCells('A1:F1')
+    sheet.mergeCells(includesTranscriptColumn ? 'A1:G1' : 'A1:F1')
     sheet.getCell('A1').value = 'JR Term Assistant 解析結果'
     sheet.getCell('A1').font = { bold: true, size: 14, color: { argb: 'FFFFFFFF' } }
     sheet.getCell('A1').fill = {
@@ -62,12 +67,15 @@ exportResultsRouter.post('/', requireAuth, async (request, response, next) => {
       fgColor: { argb: 'FF005E68' },
     }
     sheet.getCell('A2').value = '対象ファイル'
-    sheet.getCell('B2').value = safeText(body.fileName) || '—'
+    sheet.getCell('B2').value = fileNames.map(safeText).join(', ') || '—'
     sheet.getCell('D2').value = '解析日時'
     sheet.getCell('E2').value = safeText(body.analyzedAt) || '—'
 
     sheet.columns = [
       { header: '検出された社内用語', key: 'displayTerm', width: 22 },
+      ...(includesTranscriptColumn
+        ? [{ header: 'トランスクリプト名', key: 'transcriptName', width: 34 }]
+        : []),
       { header: '正式名称', key: 'canonicalTerm', width: 30 },
       { header: '分類', key: 'classification', width: 18 },
       { header: '意味の推測', key: 'meaning', width: 38 },
@@ -77,6 +85,7 @@ exportResultsRouter.post('/', requireAuth, async (request, response, next) => {
     const headerRow = sheet.getRow(3)
     headerRow.values = [
       '検出された社内用語',
+      ...(includesTranscriptColumn ? ['トランスクリプト名'] : []),
       '正式名称',
       '分類',
       '意味の推測',
@@ -94,6 +103,7 @@ exportResultsRouter.post('/', requireAuth, async (request, response, next) => {
     body.results.forEach((result) => {
       const row = sheet.addRow({
         displayTerm: result.displayTerm,
+        transcriptName: result.transcriptName,
         canonicalTerm: result.canonicalTerm,
         classification: result.classification ?? '—',
         meaning: result.meaning,

@@ -10,24 +10,29 @@ export type AnalysisResult = {
   firstOccurrenceIndex: number
 }
 
+export type TranscriptAnalysisResult = AnalysisResult & {
+  transcriptName: string
+}
+
 export type AnalyzeTranscriptResponse = {
   success: true
-  file: {
+  files: Array<{
     name: string
     size: number
     type: string
-  }
+  }>
   stats: {
     characterCount: number
     detectedTermCount: number
     totalOccurrences: number
   }
-  results: AnalysisResult[]
+  results: TranscriptAnalysisResult[]
 }
 
 export type ApiErrorCode =
   | 'NO_FILE'
   | 'FILE_TOO_LARGE'
+  | 'TOO_MANY_FILES'
   | 'UNSUPPORTED_FILE_TYPE'
   | 'EMPTY_TRANSCRIPT'
   | 'TRANSCRIPT_EXTRACTION_FAILED'

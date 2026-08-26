@@ -286,24 +286,27 @@ type ProtectedPageProps = {
 }
 
 type UploadPageProps = ProtectedPageProps & {
-  selectedFile: File | null
-  onFileChange: (file: File | null) => void
+  selectedFiles: File[]
+  onFilesChange: (files: File[]) => void
   onAnalyze: () => void
 }
 
 function UploadPage({
-  selectedFile,
-  onFileChange,
+  selectedFiles,
+  onFilesChange,
   onAnalyze,
   user,
   onLogout,
 }: UploadPageProps) {
   function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0]
-    if (!file) return
+    const files = Array.from(event.target.files ?? [])
+    if (files.length === 0) return
 
-    onFileChange(file)
+    onFilesChange(files)
+    event.target.value = ''
   }
+
+  const totalSize = selectedFiles.reduce((total, file) => total + file.size, 0)
 
   return (
     <main className={styles.uploadPage} data-testid="upload-page">
@@ -321,6 +324,7 @@ function UploadPage({
               <input
                 type="file"
                 accept=".txt,.docx"
+                multiple
                 onChange={handleFileChange}
                 aria-label="トランスクリプトファイルを選択"
               />
@@ -328,44 +332,60 @@ function UploadPage({
                 TXT
               </span>
               <strong>
-                {selectedFile ? 'ファイルを選択しました' : 'ファイルを選択'}
+                {selectedFiles.length > 0
+                  ? `${selectedFiles.length}件のファイルを選択しました`
+                  : 'ファイルを選択'}
               </strong>
               <span>
-                {selectedFile
-                  ? `${Math.max(1, Math.round(selectedFile.size / 1024))} KB · 解析を開始できます`
+                {selectedFiles.length > 0
+                  ? `${Math.max(1, Math.round(totalSize / 1024))} KB · 解析を開始できます`
                   : 'TXT / DOCX ファイルを選択してください'}
               </span>
-              <small>{selectedFile?.name ?? 'ファイルが選択されていません'}</small>
+              <small>
+                {selectedFiles.length > 0
+                  ? '選択したファイルは下の一覧で確認できます'
+                  : 'ファイルが選択されていません'}
+              </small>
             </label>
 
-            {selectedFile && (
-              <div className={styles.fileSummary}>
-                <span className={styles.fileTypeIcon} aria-hidden="true">
-                  TXT
-                </span>
-                <span className={styles.fileDetails}>
-                  <strong>{selectedFile.name}</strong>
-                  <small>{Math.max(1, Math.round(selectedFile.size / 1024))} KB</small>
-                </span>
-                <span className={styles.selectedStatus}>
-                  <img src={statusDot} alt="" />
-                  選択済み
-                </span>
-                <button
-                  type="button"
-                  className={styles.removeFile}
-                  aria-label="選択したファイルを削除"
-                  onClick={() => onFileChange(null)}
-                >
-                  ×
-                </button>
+            {selectedFiles.length > 0 && (
+              <div className={styles.fileSummaryList} aria-label="選択したファイル">
+                {selectedFiles.map((file, index) => (
+                  <div className={styles.fileSummary} key={`${file.name}-${index}`}>
+                    <span className={styles.fileTypeIcon} aria-hidden="true">
+                      {file.name.toLocaleLowerCase('en-US').endsWith('.docx')
+                        ? 'DOCX'
+                        : 'TXT'}
+                    </span>
+                    <span className={styles.fileDetails}>
+                      <strong>{file.name}</strong>
+                      <small>{Math.max(1, Math.round(file.size / 1024))} KB</small>
+                    </span>
+                    <span className={styles.selectedStatus}>
+                      <img src={statusDot} alt="" />
+                      選択済み
+                    </span>
+                    <button
+                      type="button"
+                      className={styles.removeFile}
+                      aria-label={`${file.name}を削除`}
+                      onClick={() =>
+                        onFilesChange(
+                          selectedFiles.filter((_, fileIndex) => fileIndex !== index),
+                        )
+                      }
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
               </div>
             )}
 
             <button
               className={styles.analysisButton}
               type="button"
-              disabled={!selectedFile}
+              disabled={selectedFiles.length === 0}
               onClick={onAnalyze}
             >
               解析を開始
@@ -426,7 +446,7 @@ const processingGuidance = [
 ]
 
 type ProcessingPageProps = ProtectedPageProps & {
-  file: File | null
+  files: File[]
   stage: number
   error: string
   onCancel: () => void
@@ -434,7 +454,7 @@ type ProcessingPageProps = ProtectedPageProps & {
 }
 
 function ProcessingPage({
-  file,
+  files,
   stage,
   error,
   onCancel,
@@ -442,10 +462,12 @@ function ProcessingPage({
   user,
   onLogout,
 }: ProcessingPageProps) {
-  const fileName = file?.name ?? 'ファイル未選択'
-  const fileType = file?.name.toLocaleLowerCase('en-US').endsWith('.docx')
-    ? 'DOCX'
-    : 'TXT'
+  const batchName =
+    files.length === 0
+      ? 'ファイル未選択'
+      : files.length === 1
+        ? files[0].name
+        : `${files.length}件のトランスクリプト`
 
   return (
     <main className={styles.uploadPage} data-testid="processing-page">
@@ -462,32 +484,36 @@ function ProcessingPage({
               処理が完了するまで、このページを閉じないでください。
             </p>
 
-            <div className={styles.processingFileSummary}>
-              <span className={styles.processingFileIcon} aria-hidden="true">
-                {fileType}
-              </span>
-              <span className={styles.fileDetails}>
-                <strong>{fileName}</strong>
-                <small>{error ? 'エラー' : '解析中'}</small>
-              </span>
-              <span className={styles.processingStatus}>
-                <img src={processingStatusDot} alt="" />
-                {error ? '失敗' : '処理中'}
-              </span>
-              <button
-                type="button"
-                className={styles.removeFile}
-                aria-label="解析をキャンセル"
-                onClick={onCancel}
-              >
-                ×
-              </button>
+            <div
+              className={styles.processingFileList}
+              aria-label="処理中のトランスクリプト"
+            >
+              {files.map((file, index) => (
+                <div
+                  className={styles.processingFileSummary}
+                  key={`${file.name}-${index}`}
+                >
+                  <span className={styles.processingFileIcon} aria-hidden="true">
+                    {file.name.toLocaleLowerCase('en-US').endsWith('.docx')
+                      ? 'DOCX'
+                      : 'TXT'}
+                  </span>
+                  <span className={styles.fileDetails}>
+                    <strong>{file.name}</strong>
+                    <small>{error ? 'エラー' : '解析中'}</small>
+                  </span>
+                  <span className={styles.processingStatus}>
+                    <img src={processingStatusDot} alt="" />
+                    {error ? '失敗' : '処理中'}
+                  </span>
+                </div>
+              ))}
             </div>
 
             <div className={styles.processingStepper} aria-live="polite">
               <div className={styles.stepperHeading}>
                 <p>Transcript processing</p>
-                <strong>{fileName}</strong>
+                <strong>{batchName}</strong>
                 <span>
                   {error ? '解析に失敗しました' : processingSteps[stage]?.title}
                 </span>
@@ -607,6 +633,7 @@ type ResultsPageProps = ProtectedPageProps & {
 
 function ResultsPage({ analysis, analyzedAt, user, onLogout }: ResultsPageProps) {
   const resultCount = analysis?.results.length ?? 0
+  const showTranscriptColumn = (analysis?.files.length ?? 0) > 1
   const [downloadError, setDownloadError] = useState('')
 
   async function handleDownload() {
@@ -640,7 +667,11 @@ function ResultsPage({ analysis, analyzedAt, user, onLogout }: ResultsPageProps)
           <div className={styles.resultsMain}>
             <h1 id="results-title">解析結果</h1>
             <p className={styles.resultsMeta}>
-              {analysis?.file.name ?? '解析結果なし'}
+              {analysis
+                ? analysis.files.length === 1
+                  ? analysis.files[0].name
+                  : `${analysis.files.length}件のトランスクリプト`
+                : '解析結果なし'}
               {analyzedAt &&
                 ` · ${new Intl.DateTimeFormat('ja-JP', {
                   dateStyle: 'short',
@@ -665,31 +696,55 @@ function ResultsPage({ analysis, analyzedAt, user, onLogout }: ResultsPageProps)
               </div>
               {resultCount > 0 ? (
                 <div className={styles.resultsTableScroll}>
-                  <table className={styles.resultsTable}>
+                  <table
+                    className={`${styles.resultsTable} ${
+                      showTranscriptColumn ? styles.multiFileResultsTable : ''
+                    }`}
+                  >
                     <thead>
                       <tr>
-                        <th scope="col">検出された社内用語</th>
-                        <th scope="col">出現した発話</th>
-                        <th scope="col">分類</th>
+                        <th className={styles.resultsTermColumn} scope="col">
+                          検出された社内用語
+                        </th>
+                        {showTranscriptColumn && (
+                          <th className={styles.resultsTranscriptColumn} scope="col">
+                            トランスクリプト名
+                          </th>
+                        )}
+                        <th className={styles.resultsContextColumn} scope="col">
+                          出現した発話
+                        </th>
+                        <th className={styles.resultsClassificationColumn} scope="col">
+                          分類
+                        </th>
                         <th scope="col">意味の推測</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {analysis?.results.map((item) => (
-                        <tr key={item.termId}>
-                          <th scope="row">
+                      {analysis?.results.map((item, index) => (
+                        <tr key={`${item.transcriptName}-${item.termId}-${index}`}>
+                          <th className={styles.resultsTermColumn} scope="row">
                             {item.displayTerm}
                             {item.displayTerm !== item.canonicalTerm && (
                               <small>正式名称：{item.canonicalTerm}</small>
                             )}
                           </th>
-                          <td className={styles.resultsContextSentence}>
+                          {showTranscriptColumn && (
+                            <td className={styles.resultsTranscriptColumn}>
+                              {item.transcriptName}
+                            </td>
+                          )}
+                          <td
+                            className={`${styles.resultsContextColumn} ${styles.resultsContextSentence}`}
+                          >
                             <HighlightedContext
                               text={item.contextSentence}
                               term={item.displayTerm}
                             />
                           </td>
-                          <td>{item.classification ?? '—'}</td>
+                          <td className={styles.resultsClassificationColumn}>
+                            {item.classification ?? '—'}
+                          </td>
                           <td>
                             <span>{item.meaning}</span>
                             <small>{item.occurrenceCount}回検出</small>
@@ -751,7 +806,7 @@ function App() {
   const [route, setRoute] = useState(window.location.hash)
   const [user, setUser] = useState<AuthUser | null>(null)
   const [authLoading, setAuthLoading] = useState(true)
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const [analysis, setAnalysis] = useState<AnalyzeTranscriptResponse | null>(null)
   const [analyzedAt, setAnalyzedAt] = useState<Date | null>(null)
   const [processingStage, setProcessingStage] = useState(0)
@@ -794,13 +849,13 @@ function App() {
     analysisAbortController.current = null
     await logout().catch(() => undefined)
     setUser(null)
-    setSelectedFile(null)
+    setSelectedFiles([])
     setAnalysis(null)
     window.location.hash = '#login'
   }
 
   async function runAnalysis() {
-    if (!selectedFile) return
+    if (selectedFiles.length === 0) return
     analysisAbortController.current?.abort()
     const controller = new AbortController()
     analysisAbortController.current = controller
@@ -829,7 +884,7 @@ function App() {
 
     try {
       const [result] = await Promise.all([
-        analyzeTranscript(selectedFile, controller.signal),
+        analyzeTranscript(selectedFiles, controller.signal),
         minimumDuration,
       ])
       if (analysisRunId.current !== currentRunId) return
@@ -869,8 +924,8 @@ function App() {
   if (route === '#upload') {
     return (
       <UploadPage
-        selectedFile={selectedFile}
-        onFileChange={setSelectedFile}
+        selectedFiles={selectedFiles}
+        onFilesChange={setSelectedFiles}
         onAnalyze={runAnalysis}
         user={user}
         onLogout={handleLogout}
@@ -880,7 +935,7 @@ function App() {
   if (route === '#processing') {
     return (
       <ProcessingPage
-        file={selectedFile}
+        files={selectedFiles}
         stage={processingStage}
         error={processingError}
         onCancel={() => {

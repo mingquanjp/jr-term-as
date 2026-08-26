@@ -177,9 +177,9 @@ POST /api/auth/logout
 ```text
 POST /api/analyze-transcript
 Content-Type: multipart/form-data
-Field: file
+Field: files (repeat for each transcript; legacy field `file` is also accepted)
 Supported: .txt, .docx
-Maximum size: 10 MB
+Maximum: 10 files per request, 10 MB per file
 ```
 
 The endpoint requires an authenticated session. Uploaded buffers are processed in memory and are not persisted. The server never logs complete transcript contents.
@@ -199,8 +199,9 @@ POST /api/export-results
 ```
 
 The authenticated results page sends only its displayed, accepted results to
-this endpoint and downloads an `.xlsx` file with the detected term, official
-name, inferred meaning, context sentence, and occurrence count.
+this endpoint and downloads an `.xlsx` file with the detected term, transcript
+name (for multi-file analysis), official name, inferred meaning, context
+sentence, and occurrence count.
 
 ## Data handling
 

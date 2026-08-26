@@ -372,7 +372,7 @@
 
 .uploadWorkspace {
   width: min(100%, 1280px);
-  min-height: 664px;
+  min-height: 770px;
   margin: 8px auto 0;
   padding: 24px 31px;
   border: 1px solid var(--color-border-subtle);
@@ -383,7 +383,7 @@
 .uploadSurface {
   position: relative;
   width: 100%;
-  min-height: 614px;
+  min-height: 720px;
   overflow: hidden;
   border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-card);
@@ -482,12 +482,21 @@
   align-items: center;
   width: 460px;
   height: 64px;
-  margin-top: 24px;
+  margin-top: 0;
   padding: 0 12px 0 16px;
   gap: 8px;
   border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-field);
   background: var(--color-surface);
+}
+
+.fileSummaryList {
+  display: grid;
+  width: 460px;
+  max-height: 136px;
+  margin-top: 24px;
+  gap: 8px;
+  overflow-y: auto;
 }
 
 .fileTypeIcon {
@@ -700,7 +709,7 @@
 
 .processingWorkspace {
   width: min(100%, 1280px);
-  min-height: 684px;
+  min-height: 810px;
   margin: 8px auto 0;
   padding: 24px 31px;
   border: 1px solid var(--color-border-subtle);
@@ -711,7 +720,7 @@
 .processingSurface {
   position: relative;
   width: 100%;
-  min-height: 634px;
+  min-height: 760px;
   overflow: hidden;
   border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-card);
@@ -750,12 +759,21 @@
   align-items: center;
   width: 460px;
   height: 64px;
-  margin-top: 22px;
+  margin-top: 0;
   padding: 0 12px 0 16px;
   gap: 8px;
   border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-field);
   background: var(--color-surface);
+}
+
+.processingFileList {
+  display: grid;
+  width: 460px;
+  max-height: 136px;
+  margin-top: 22px;
+  gap: 8px;
+  overflow-y: auto;
 }
 
 .processingFileIcon {
@@ -1224,21 +1242,31 @@
   font-weight: 600;
 }
 
-.resultsTable th:first-child {
+.resultsTermColumn {
   width: 140px;
   border-right: 1px solid var(--color-border-subtle);
 }
 
-.resultsTable th:nth-child(2),
-.resultsTable td:nth-child(2) {
+.resultsContextColumn {
   width: 210px;
   border-right: 1px solid var(--color-border-subtle);
 }
 
-.resultsTable th:nth-child(3),
-.resultsTable td:nth-child(3) {
+.resultsClassificationColumn {
   width: 100px;
   border-right: 1px solid var(--color-border-subtle);
+}
+
+.resultsTranscriptColumn {
+  width: 180px;
+  border-right: 1px solid var(--color-border-subtle);
+  overflow-wrap: anywhere;
+}
+
+.multiFileResultsTable {
+  width: 884px;
+  min-width: 884px;
+  max-width: none;
 }
 
 .resultsTable tbody tr:nth-child(odd) {
@@ -1647,11 +1675,13 @@
   .uploadDescription,
   .dropzone,
   .fileSummary,
+  .fileSummaryList,
   .uploadContractNote {
     width: 100%;
   }
 
   .processingDescription,
+  .processingFileList,
   .processingFileSummary,
   .processingStepper {
     width: 100%;
@@ -1909,12 +1939,11 @@
     height: 44px;
   }
 
-  .resultsTable th:first-child {
+  .resultsTermColumn {
     width: 160px;
   }
 
-  .resultsTable th:nth-child(2),
-  .resultsTable td:nth-child(2) {
+  .resultsContextColumn {
     width: 260px;
   }
 

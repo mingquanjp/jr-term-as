@@ -9,7 +9,7 @@ import { exportResultsRouter } from './routes/exportResults.js'
 export const app = express()
 
 app.disable('x-powered-by')
-app.use(express.json({ limit: '32kb' }))
+app.use(express.json({ limit: '2mb' }))
 app.get('/api/health', (_request, response) => response.json({ status: 'ok' }))
 app.use('/api/auth', authRouter)
 app.use('/api/dictionary', dictionaryRouter)

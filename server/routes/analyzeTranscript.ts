@@ -19,12 +19,19 @@ import {
   extractTranscript,
   TranscriptExtractionError,
 } from '../transcript/extractTranscript.js'
+import { normalizeUploadFileName } from '../transcript/normalizeUploadFileName.js'
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024
+const MAX_FILE_COUNT = 10
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: MAX_FILE_SIZE },
+  limits: { fileSize: MAX_FILE_SIZE, files: MAX_FILE_COUNT },
 })
+
+function uploadedFiles(request: Parameters<typeof requireAuth>[0]) {
+  if (!request.files || Array.isArray(request.files)) return request.files ?? []
+  return Object.values(request.files).flat()
+}
 
 function sendError(
   response: Parameters<Parameters<typeof analyzeTranscriptRouter.post>[1]>[1],
@@ -42,13 +49,28 @@ analyzeTranscriptRouter.post(
   '/',
   requireAuth,
   (request, response, next) => {
-    upload.single('file')(request, response, (error) => {
+    upload.fields([
+      { name: 'files', maxCount: MAX_FILE_COUNT },
+      { name: 'file', maxCount: 1 },
+    ])(request, response, (error) => {
       if (error instanceof multer.MulterError && error.code === 'LIMIT_FILE_SIZE') {
         sendError(
           response,
           413,
           'FILE_TOO_LARGE',
-          'ファイルサイズは10MB以下にしてください。',
+          '各ファイルのサイズは10MB以下にしてください。',
+        )
+        return
+      }
+      if (
+        error instanceof multer.MulterError &&
+        (error.code === 'LIMIT_FILE_COUNT' || error.code === 'LIMIT_UNEXPECTED_FILE')
+      ) {
+        sendError(
+          response,
+          400,
+          'TOO_MANY_FILES',
+          `一度にアップロードできるファイルは${MAX_FILE_COUNT}件までです。`,
         )
         return
       }
@@ -60,55 +82,75 @@ analyzeTranscriptRouter.post(
     })
   },
   async (request, response) => {
-    if (!request.file) {
-      sendError(response, 400, 'NO_FILE', 'ファイルを選択してください。')
+    const files = uploadedFiles(request)
+    files.forEach((file) => {
+      file.originalname = normalizeUploadFileName(file.originalname)
+    })
+    if (files.length === 0) {
+      sendError(response, 400, 'NO_FILE', 'ファイルを1件以上選択してください。')
       return
     }
 
     try {
-      const transcript = await extractTranscript(request.file)
-      if (!transcript.trim()) {
-        sendError(response, 422, 'EMPTY_TRANSCRIPT', 'トランスクリプトが空です。')
-        return
-      }
-
       const terms = await loadDictionary()
       const contextGate = getQwenContextGateConfig()
-      const occurrences = findTermOccurrences(transcript, terms, {
-        includeContextRequired: contextGate != null,
-      })
+      const results: AnalyzeTranscriptResponse['results'] = []
+      let characterCount = 0
 
-      let acceptedOccurrences = occurrences
-      if (contextGate) {
-        try {
-          acceptedOccurrences = (
-            await validateOccurrencesWithQwen(occurrences, contextGate)
-          ).accepted
-        } catch (error) {
-          console.error(
-            'Qwen Context Gate failed:',
-            error instanceof Error ? error.message : 'unknown error',
-          )
+      for (const file of files) {
+        const transcript = await extractTranscript(file)
+        if (!transcript.trim()) {
           sendError(
             response,
-            503,
-            'CONTEXT_VALIDATION_UNAVAILABLE',
-            '文脈判定AIに接続できません。接続を確認してから再試行してください。',
+            422,
+            'EMPTY_TRANSCRIPT',
+            `${file.originalname} のトランスクリプトが空です。`,
           )
           return
         }
+
+        const occurrences = findTermOccurrences(transcript, terms, {
+          includeContextRequired: contextGate != null,
+        })
+        let acceptedOccurrences = occurrences
+        if (contextGate) {
+          try {
+            acceptedOccurrences = (
+              await validateOccurrencesWithQwen(occurrences, contextGate)
+            ).accepted
+          } catch (error) {
+            console.error(
+              'Qwen Context Gate failed:',
+              error instanceof Error ? error.message : 'unknown error',
+            )
+            sendError(
+              response,
+              503,
+              'CONTEXT_VALIDATION_UNAVAILABLE',
+              '文脈判定AIに接続できません。接続を確認してから再試行してください。',
+            )
+            return
+          }
+        }
+
+        characterCount += transcript.length
+        results.push(
+          ...groupTermOccurrences(acceptedOccurrences).map((result) => ({
+            ...result,
+            transcriptName: file.originalname,
+          })),
+        )
       }
 
-      const results = groupTermOccurrences(acceptedOccurrences)
       const body: AnalyzeTranscriptResponse = {
         success: true,
-        file: {
-          name: request.file.originalname,
-          size: request.file.size,
-          type: request.file.mimetype,
-        },
+        files: files.map((file) => ({
+          name: file.originalname,
+          size: file.size,
+          type: file.mimetype,
+        })),
         stats: {
-          characterCount: transcript.length,
+          characterCount,
           detectedTermCount: results.length,
           totalOccurrences: results.reduce(
             (total, result) => total + result.occurrenceCount,
@@ -134,9 +176,13 @@ analyzeTranscriptRouter.post(
         '解析中にエラーが発生しました。',
       )
     } finally {
-      if (request.file && 'path' in request.file && request.file.path) {
-        await fs.unlink(request.file.path).catch(() => undefined)
-      }
+      await Promise.all(
+        files.map((file) =>
+          'path' in file && file.path
+            ? fs.unlink(file.path).catch(() => undefined)
+            : Promise.resolve(),
+        ),
+      )
     }
   },
 )

@@ -48,11 +48,11 @@ export async function logout(): Promise<void> {
 }
 
 export async function analyzeTranscript(
-  file: File,
+  files: File[],
   signal?: AbortSignal,
 ): Promise<AnalyzeTranscriptResponse> {
   const formData = new FormData()
-  formData.append('file', file)
+  files.forEach((file) => formData.append('files', file))
   const response = await fetch('/api/analyze-transcript', {
     method: 'POST',
     credentials: 'include',
@@ -71,7 +71,7 @@ export async function exportAnalysisResults(
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      fileName: analysis.file.name,
+      fileNames: analysis.files.map((file) => file.name),
       analyzedAt: analyzedAt?.toISOString() ?? '',
       results: analysis.results,
     }),
