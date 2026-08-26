@@ -1,6 +1,7 @@
 import type { AnalysisResult } from '../../shared/analysis.js'
 import { extractContextSentence } from '../transcript/extractContextSentence.js'
 import { normalizeText, normalizeTextWithMap } from '../transcript/normalizeText.js'
+import { passesRuleBasedMatchChecks } from './japaneseMatchRules.js'
 import type { TermEntry } from './types.js'
 
 type MatchCandidate = {
@@ -82,6 +83,19 @@ export function matchTerms(transcript: string, terms: TermEntry[]): AnalysisResu
         continue
       }
 
+      const originalIndex = normalized.originalIndexes[matchIndex] ?? matchIndex
+      if (
+        !passesRuleBasedMatchChecks({
+          normalizedText: normalized.normalizedText,
+          normalizedMatchIndex: matchIndex,
+          normalizedVariant: candidate.normalizedVariant,
+          originalText: normalized.originalText,
+          originalMatchIndex: originalIndex,
+        })
+      ) {
+        continue
+      }
+
       let overlaps = false
       for (let index = matchIndex; index < matchEnd; index += 1) {
         if (occupied[index]) {
@@ -98,7 +112,6 @@ export function matchTerms(transcript: string, terms: TermEntry[]): AnalysisResu
         matchIndex,
         candidate.normalizedVariant.length,
       )
-      const originalIndex = normalized.originalIndexes[matchIndex] ?? matchIndex
       let result = groupedResults.get(candidate.term.termId)
       if (!result) {
         result = {

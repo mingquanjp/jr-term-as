@@ -56,4 +56,16 @@ describe('matchTerms', () => {
     const results = matchTerms('BOXのあとでイノ本を確認。', terms)
     expect(results.map((result) => result.termId)).toEqual(['TERM_078', 'TERM_001'])
   })
+
+  it('rejects an Exact short-kana variant embedded inside an ordinary word', () => {
+    const shortKanaTerm: TermEntry = {
+      termId: 'TERM_025',
+      canonicalTerm: '運転休止',
+      meaning: '列車の運転を取りやめること',
+      variants: [{ value: 'うや', matchType: 'Exact' }],
+    }
+
+    expect(matchTerms('えっと、どうやったかなあ。', [shortKanaTerm])).toEqual([])
+    expect(matchTerms('運転はうやです。', [shortKanaTerm])).toHaveLength(1)
+  })
 })
