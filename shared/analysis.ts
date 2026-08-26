@@ -2,6 +2,7 @@ export type AnalysisResult = {
   termId: string
   displayTerm: string
   canonicalTerm: string
+  classification?: string
   meaning: string
   contextSentence: string
   matchedVariants: string[]

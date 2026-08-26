@@ -16,7 +16,24 @@ export type DictionaryRow = {
 }
 
 function clean(value: unknown): string {
-  return value == null ? '' : String(value).trim()
+  if (value == null) return ''
+  if (typeof value === 'string' || typeof value === 'number')
+    return String(value).trim()
+  if (typeof value === 'object') {
+    const cell = value as {
+      text?: unknown
+      result?: unknown
+      richText?: Array<{ text?: unknown }>
+    }
+    if (Array.isArray(cell.richText))
+      return cell.richText
+        .map((part) => String(part.text ?? ''))
+        .join('')
+        .trim()
+    if (cell.text != null) return String(cell.text).trim()
+    if (cell.result != null) return clean(cell.result)
+  }
+  return String(value).trim()
 }
 
 function parseMatchType(
@@ -42,6 +59,8 @@ export function parseDictionaryRows(rows: DictionaryRow[]): DictionaryBuildResul
   let currentTermId = ''
   let currentCanonicalTerm = ''
   let currentMeaning = ''
+  let currentTermIsConflicting = false
+  const reportedMetadataConflicts = new Set<string>()
 
   rows.forEach((row, index) => {
     const rowNumber = index + 1
@@ -50,10 +69,34 @@ export function parseDictionaryRows(rows: DictionaryRow[]): DictionaryBuildResul
     const meaning = clean(row.meaning)
     const variant = clean(row.variant)
 
-    if (termId) currentTermId = termId
+    if (termId) {
+      currentTermId = termId
+      currentCanonicalTerm = canonicalTerm
+      currentMeaning = meaning
+      currentTermIsConflicting = false
+
+      const existing = terms.get(termId)
+      if (
+        existing &&
+        ((canonicalTerm && canonicalTerm !== existing.canonicalTerm) ||
+          (meaning && meaning !== existing.meaning))
+      ) {
+        currentTermIsConflicting = true
+        const conflictKey = `${termId}\u0000${canonicalTerm}\u0000${meaning}`
+        if (!reportedMetadataConflicts.has(conflictKey)) {
+          reportedMetadataConflicts.add(conflictKey)
+          warnings.push({
+            code: 'CONFLICTING_TERM_METADATA',
+            message: `Row ${rowNumber}: ${termId} has conflicting canonical term or meaning metadata. This row group was ignored.`,
+          })
+        }
+      }
+    }
     if (canonicalTerm) currentCanonicalTerm = canonicalTerm
     if (meaning) currentMeaning = meaning
     if (!variant) return
+
+    if (currentTermIsConflicting) return
 
     if (!currentTermId || !currentCanonicalTerm || !currentMeaning) {
       warnings.push({

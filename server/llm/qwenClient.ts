@@ -2,7 +2,29 @@ import type { TermMatchOccurrence } from '../terminology/matchTerms.js'
 
 const DEFAULT_BASE_URL = 'http://127.0.0.1:18000/v1'
 const DEFAULT_MODEL = 'Qwen/Qwen3-4B-Instruct-2507-FP8'
-const BATCH_SIZE = 6
+// Smaller batches reduce cross-candidate interference in a classification task.
+const BATCH_SIZE = 3
+
+const CONTEXT_DECISION_SCHEMA = {
+  type: 'object',
+  additionalProperties: false,
+  required: ['decisions'],
+  properties: {
+    decisions: {
+      type: 'array',
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['occurrenceId', 'decision', 'termId'],
+        properties: {
+          occurrenceId: { type: 'string' },
+          decision: { type: 'string', enum: ['accept', 'reject', 'uncertain'] },
+          termId: { type: ['string', 'null'] },
+        },
+      },
+    },
+  },
+} as const
 
 export type QwenContextGateConfig = {
   baseUrl: string
@@ -80,10 +102,48 @@ function buildPrompt(occurrences: TermMatchOccurrence[]) {
     content: JSON.stringify({
       task: '各候補が会議文脈でJR西日本の社内用語として使われているかを判定してください。',
       rules: [
-        '公式名称・意味はJRレビュー済み辞書の情報だけを根拠にする。推測で新しい意味を作らない。',
-        '候補文字列が一般語の一部、言いよどみ、または会議室名・話者名などのメタデータに含まれる場合は reject。',
-        '明確に判断できない場合は uncertain。',
+        '候補ごとに独立して判定し、他の候補の判定結果を根拠にしない。',
+        '公式名称・意味・分類・dictionaryNote はJRレビュー済み辞書の事実である。dictionaryNote がある場合は最優先する。',
+        '候補文字列が会議室名・話者名・一般語の一部・言いよどみである場合は reject。',
+        '公式名称・意味・分類と前後文脈が明確に整合する場合のみ accept。根拠が不足する場合は推測せず uncertain。',
+        '組織名称は、部署・本部・担当・所管・依頼先など、組織を指す根拠がある場合のみ accept。',
+        'システム名称は、画面・データ・連携・改修・リプレース・運用など、対象システムを指す根拠がある場合のみ accept。',
+        '辞書にない意味を作らず、候補の表記が辞書登録済みである事実そのものは否定しない。',
         'JSON以外は出力しない。',
+      ],
+      examples: [
+        {
+          candidate:
+            'UK → 輸送計画システム（列車・車両・乗務員の運用を計画する社内システム）',
+          context: 'UKのリプレースに伴い、インターフェース改修の見積を確認します。',
+          decision: 'accept',
+        },
+        {
+          candidate:
+            'UK → 輸送計画システム（列車・車両・乗務員の運用を計画する社内システム）',
+          context: 'UK市場向けの販売資料を確認します。',
+          decision: 'reject',
+        },
+        {
+          candidate: '輸送計画 → 輸送計画システム',
+          context: '展示会の機材の輸送計画を立てます。',
+          decision: 'reject',
+        },
+        {
+          candidate: '安全推進 → 安全推進部',
+          context: '安全推進のため、保護具の着用を徹底します。',
+          decision: 'reject',
+        },
+        {
+          candidate: '均等 → 近畿統括本部',
+          context: '均等本部側でダイヤ改正の連絡事項を確認します。',
+          decision: 'accept',
+        },
+        {
+          candidate: 'ボックス → BOX（ファイル共有サービス）',
+          context: 'この機能はブラックボックスになっています。',
+          decision: 'reject',
+        },
       ],
       output: {
         decisions: [
@@ -91,7 +151,6 @@ function buildPrompt(occurrences: TermMatchOccurrence[]) {
             occurrenceId: 'TERM_001:123',
             decision: 'accept | reject | uncertain',
             termId: '候補と同じtermId、reject/uncertainではnull可',
-            reason: '短い日本語の理由',
           },
         ],
       },
@@ -101,6 +160,8 @@ function buildPrompt(occurrences: TermMatchOccurrence[]) {
         termId: occurrence.termId,
         officialName: occurrence.canonicalTerm,
         jrMeaning: occurrence.meaning,
+        jrClassification: occurrence.classification,
+        dictionaryNote: occurrence.variantNote ?? null,
         context: occurrence.contextWindow,
       })),
     }),
@@ -129,7 +190,15 @@ async function requestDecisions(
         buildPrompt(occurrences),
       ],
       temperature: 0,
-      max_tokens: 700,
+      max_tokens: 400,
+      response_format: {
+        type: 'json_schema',
+        json_schema: {
+          name: 'jr_term_context_decisions',
+          strict: true,
+          schema: CONTEXT_DECISION_SCHEMA,
+        },
+      },
     }),
   })
   const responseText = await response.text()

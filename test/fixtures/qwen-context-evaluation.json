@@ -1,0 +1,133 @@
+{
+  "version": 1,
+  "purpose": "Qwen Context Gateの事前評価。全件が合成・匿名化された社内検証用の文章であり、JRレビュー前の期待ラベルです。",
+  "reviewStatus": "JRレビュー待ち",
+  "cases": [
+    {
+      "id": "hr-dev-accept-01",
+      "termId": "TERM_012",
+      "variant": "人財開発室",
+      "expectedDisplay": true,
+      "previous": "共創ソリューション本部で研修計画を整理しています。",
+      "current": "人財開発室にAI研修の実施計画を確認してください。",
+      "next": "対象者と日程を来週までに共有します。"
+    },
+    {
+      "id": "hr-dev-reject-01",
+      "termId": "TERM_012",
+      "variant": "人財開発室",
+      "expectedDisplay": false,
+      "previous": "協力会社の担当者と打合せをしました。",
+      "current": "先方の人財開発室が研修資料を作成しています。",
+      "next": "JR西日本の組織ではありません。"
+    },
+    {
+      "id": "uk-accept-01",
+      "termId": "TERM_015",
+      "variant": "UK",
+      "expectedDisplay": true,
+      "previous": "列車運用データの連携課題を確認しています。",
+      "current": "UKのリプレースに伴い、インターフェース改修の見積を確認します。",
+      "next": "車両と乗務員の運用データへの影響を整理してください。"
+    },
+    {
+      "id": "uk-reject-01",
+      "termId": "TERM_015",
+      "variant": "UK",
+      "expectedDisplay": false,
+      "previous": "海外事例を調査しています。",
+      "current": "UK市場向けの販売資料を確認します。",
+      "next": "ロンドンの事例も比較対象にします。"
+    },
+    {
+      "id": "transport-plan-accept-01",
+      "termId": "TERM_015",
+      "variant": "輸送計画",
+      "expectedDisplay": true,
+      "previous": "ダイヤと車両運用のデータ連携について議論しています。",
+      "current": "輸送計画のマスタを更新して現場へ配信してください。",
+      "next": "乗務員運用にも反映されることを確認します。"
+    },
+    {
+      "id": "transport-plan-reject-01",
+      "termId": "TERM_015",
+      "variant": "輸送計画",
+      "expectedDisplay": false,
+      "previous": "展示会の準備を進めています。",
+      "current": "機材の輸送計画を立ててください。",
+      "next": "搬入日と配送会社を決めます。"
+    },
+    {
+      "id": "safety-accept-01",
+      "termId": "TERM_022",
+      "variant": "安全推進",
+      "expectedDisplay": true,
+      "previous": "事故防止施策の所管を確認しています。",
+      "current": "安全推進にヒヤリハットの集計結果を共有してください。",
+      "next": "部内で再発防止策を検討します。"
+    },
+    {
+      "id": "safety-reject-01",
+      "termId": "TERM_022",
+      "variant": "安全推進",
+      "expectedDisplay": false,
+      "previous": "現場の作業ルールを見直します。",
+      "current": "安全推進のため、保護具の着用を徹底します。",
+      "next": "担当部署名を指しているわけではありません。"
+    },
+    {
+      "id": "one-case-one-sheet-accept-01",
+      "termId": "TERM_023",
+      "variant": "一見一様",
+      "expectedDisplay": true,
+      "previous": "設備投資の費用計画を作成しています。",
+      "current": "分析コードごとに一見一様を作成して申請してください。",
+      "next": "添付資料と金額の根拠も確認します。"
+    },
+    {
+      "id": "one-case-one-sheet-reject-01",
+      "termId": "TERM_023",
+      "variant": "一見一様",
+      "expectedDisplay": false,
+      "previous": "画面デザインを比較しました。",
+      "current": "各案は一見一様に見えます。",
+      "next": "細部の色使いには違いがあります。"
+    },
+    {
+      "id": "kinki-accept-01",
+      "termId": "TERM_028",
+      "variant": "均等",
+      "expectedDisplay": true,
+      "previous": "大阪エリアの鉄道事業の担当組織と調整しています。",
+      "current": "均等本部側でダイヤ改正の連絡事項を確認してください。",
+      "next": "地域の関係部署にも展開します。"
+    },
+    {
+      "id": "kinki-reject-01",
+      "termId": "TERM_028",
+      "variant": "均等",
+      "expectedDisplay": false,
+      "previous": "予算配分を見直します。",
+      "current": "費用を各部門へ均等に配分してください。",
+      "next": "配分基準は別途共有します。"
+    },
+    {
+      "id": "box-accept-01",
+      "termId": "TERM_078",
+      "variant": "ボックス",
+      "expectedDisplay": true,
+      "previous": "社外の関係者にも設計資料を共有します。",
+      "current": "最新版はボックスにアップロードしてください。",
+      "next": "共有リンクのアクセス権を確認します。"
+    },
+    {
+      "id": "box-reject-01",
+      "termId": "TERM_078",
+      "variant": "ボックス",
+      "expectedDisplay": false,
+      "previous": "装置の仕組みを説明しています。",
+      "current": "この機能はブラックボックスになっています。",
+      "next": "内部仕様を確認する必要があります。"
+    }
+  ]
+}

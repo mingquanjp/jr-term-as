@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-26T00:18:20.916Z",
+  "generatedAt": "2026-08-26T15:17:47.122Z",
   "source": "jr-terms.xlsx",
   "terms": [
     {
@@ -35,7 +35,8 @@
           "value": "イノベーションホンブ",
           "matchType": "Exact"
         }
-      ]
+      ],
+      "classification": "組織名称"
     },
     {
       "termId": "TERM_002",
@@ -74,7 +75,8 @@
           "value": "経営企画ぶ",
           "matchType": "Exact"
         }
-      ]
+      ],
+      "classification": "組織名称"
     },
     {
       "termId": "TERM_003",
@@ -109,7 +111,8 @@
           "value": "しすてむまねじめんと部",
           "matchType": "Exact"
         }
-      ]
+      ],
+      "classification": "組織名称"
     },
     {
       "termId": "TERM_004",
@@ -128,7 +131,8 @@
           "value": "あすとろ",
           "matchType": "Exact"
         }
-      ]
+      ],
+      "classification": "プロジェクト名"
     },
     {
       "termId": "TERM_005",
@@ -163,7 +167,8 @@
           "value": "てつどうエルエルエム",
           "matchType": "Exact"
         }
-      ]
+      ],
+      "classification": "社内システム"
     },
     {
       "termId": "TERM_006",
@@ -209,7 +214,8 @@
           "matchType": "Exact",
           "note": "Addition"
         }
-      ]
+      ],
+      "classification": "予算関連"
     },
     {
       "termId": "TERM_007",
@@ -240,7 +246,8 @@
           "matchType": "Exact",
           "note": "Addition"
         }
-      ]
+      ],
+      "classification": "組織名称"
     },
     {
       "termId": "TERM_008",
@@ -291,7 +298,8 @@
           "matchType": "Exact",
           "note": "Addition"
         }
-      ]
+      ],
+      "classification": "組織名称"
     },
     {
       "termId": "TERM_009",
@@ -353,30 +361,8 @@
           "matchType": "Exact",
           "note": "Addition"
         }
-      ]
-    },
-    {
-      "termId": "TERM_010",
-      "canonicalTerm": "ゲート判定",
-      "meaning": "・JR西日本 イノベーション本部の「システム内製開発ガイドライン」に記載されている用語で、イノベーション本部の内製開発に携わる部門におけるシステム内製開発について、マイルストーン到達時に、継続可否、次工程移行可否またはリリース可否を判定する統制上の判断点を指す",
-      "variants": [
-        {
-          "value": "ゲート判定",
-          "matchType": "Exact"
-        },
-        {
-          "value": "ゲート",
-          "matchType": "Context Required"
-        },
-        {
-          "value": "ゲートはんてい",
-          "matchType": "Exact"
-        },
-        {
-          "value": "ゲートハンテイ",
-          "matchType": "Exact"
-        }
-      ]
+      ],
+      "classification": "組織名称"
     },
     {
       "termId": "TERM_011",
@@ -439,8 +425,29 @@
         {
           "value": "共創ソリューションほんぶ",
           "matchType": "Exact"
+        },
+        {
+          "value": "デジタルソリューション本部",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "デジ本",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "デジほん",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "デジタルソリューション",
+          "matchType": "Exact",
+          "note": "Addition"
         }
-      ]
+      ],
+      "classification": "組織名称"
     },
     {
       "termId": "TERM_012",
@@ -468,6 +475,16 @@
           "matchType": "Exact"
         },
         {
+          "value": "DX人材開発室",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "DX人財開発室",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
           "value": "人財開発室",
           "matchType": "Context Required"
         },
@@ -475,7 +492,8 @@
           "value": "ディーエックス・エーアイ人財開発室",
           "matchType": "Exact"
         }
-      ]
+      ],
+      "classification": "組織名称"
     },
     {
       "termId": "TERM_013",
@@ -517,7 +535,8 @@
           "value": "でーたはぶ",
           "matchType": "Exact"
         }
-      ]
+      ],
+      "classification": "社内システム"
     },
     {
       "termId": "TERM_014",
@@ -559,7 +578,8 @@
           "value": "Master Data Management",
           "matchType": "Exact"
         }
-      ]
+      ],
+      "classification": "プロジェクト名"
     },
     {
       "termId": "TERM_015",
@@ -600,31 +620,8 @@
           "value": "輸計システム",
           "matchType": "Exact"
         }
-      ]
-    },
-    {
-      "termId": "TERM_016",
-      "canonicalTerm": "グループ方針",
-      "meaning": "・「グループ方針」のこと",
-      "variants": [
-        {
-          "value": "G方針",
-          "matchType": "Exact"
-        },
-        {
-          "value": "グループ方針",
-          "matchType": "Context Required",
-          "note": "「JR西日本グループ」との区別が必要"
-        },
-        {
-          "value": "ぐるーぷほうしん",
-          "matchType": "Exact"
-        },
-        {
-          "value": "グループホウシン",
-          "matchType": "Exact"
-        }
-      ]
+      ],
+      "classification": "社内システム"
     },
     {
       "termId": "TERM_017",
@@ -651,7 +648,8 @@
           "value": "LIGHTBLUE",
           "matchType": "Exact"
         }
-      ]
+      ],
+      "classification": "外部サービス"
     },
     {
       "termId": "TERM_018",
@@ -682,41 +680,8 @@
           "value": "あいぴーでぃー",
           "matchType": "Exact"
         }
-      ]
-    },
-    {
-      "termId": "TERM_020",
-      "canonicalTerm": "[object Object]",
-      "meaning": "京阪神エリアをさす",
-      "variants": [
-        {
-          "value": "アーバン",
-          "matchType": "Exact"
-        },
-        {
-          "value": "アーバンエリア",
-          "matchType": "Exact"
-        }
-      ]
-    },
-    {
-      "termId": "TERM_021",
-      "canonicalTerm": "安全衛生",
-      "meaning": "安全衛生の略",
-      "variants": [
-        {
-          "value": "安衛",
-          "matchType": "Exact"
-        },
-        {
-          "value": "あんえい",
-          "matchType": "Exact"
-        },
-        {
-          "value": "アンエイ",
-          "matchType": "Exact"
-        }
-      ]
+      ],
+      "classification": "社内システム"
     },
     {
       "termId": "TERM_022",
@@ -743,7 +708,8 @@
           "matchType": "Context Required",
           "note": "「安全推進」も1つの用語として存在"
         }
-      ]
+      ],
+      "classification": "組織名称"
     },
     {
       "termId": "TERM_023",
@@ -769,53 +735,8 @@
           "matchType": "Context Required",
           "note": "Addition\nよくある誤変換として"
         }
-      ]
-    },
-    {
-      "termId": "TERM_025",
-      "canonicalTerm": "運転休止",
-      "meaning": "運転休止",
-      "variants": [
-        {
-          "value": "ウヤ",
-          "matchType": "Exact"
-        },
-        {
-          "value": "うや",
-          "matchType": "Exact"
-        },
-        {
-          "value": "運休",
-          "matchType": "Exact"
-        },
-        {
-          "value": "運転休止",
-          "matchType": "Exact",
-          "note": "Addition"
-        }
-      ]
-    },
-    {
-      "termId": "TERM_027",
-      "canonicalTerm": "系統",
-      "meaning": "いわゆる部署、部門的な意味合い",
-      "variants": [
-        {
-          "value": "系統",
-          "matchType": "Context Required",
-          "note": "一般的に使われる「系統」との棲み分けが必要"
-        },
-        {
-          "value": "けいとう",
-          "matchType": "Exact",
-          "note": "Addition"
-        },
-        {
-          "value": "ケイトウ",
-          "matchType": "Exact",
-          "note": "Addition"
-        }
-      ]
+      ],
+      "classification": "予算関連"
     },
     {
       "termId": "TERM_028",
@@ -839,18 +760,8 @@
           "matchType": "Context Required",
           "note": "Addition\nよくある誤変換として"
         }
-      ]
-    },
-    {
-      "termId": "TERM_029",
-      "canonicalTerm": "企画",
-      "meaning": "基幹運営のこと",
-      "variants": [
-        {
-          "value": "企画",
-          "matchType": "Exact"
-        }
-      ]
+      ],
+      "classification": "組織名称"
     },
     {
       "termId": "TERM_030",
@@ -869,52 +780,8 @@
           "value": "CloudCampus",
           "matchType": "Exact"
         }
-      ]
-    },
-    {
-      "termId": "TERM_034",
-      "canonicalTerm": "確認会話",
-      "meaning": "言い間違い・聞き間違いによる誤解、伝達ミスやヒューマンエラーを防ぐことを目的に、相互に内容を都度確認しながらコミュニケーションをとることや、その会話方法",
-      "variants": [
-        {
-          "value": "確認会話",
-          "matchType": "Exact"
-        },
-        {
-          "value": "かくにんかいわ",
-          "matchType": "Exact"
-        },
-        {
-          "value": "カクニンカイワ",
-          "matchType": "Exact"
-        }
-      ]
-    },
-    {
-      "termId": "TERM_035",
-      "canonicalTerm": "件名",
-      "meaning": "取り組みの一単位",
-      "variants": [
-        {
-          "value": "件名",
-          "matchType": "Exact"
-        },
-        {
-          "value": "県名",
-          "matchType": "Context Required",
-          "note": "Addition\nよくある誤変換として"
-        },
-        {
-          "value": "けんめい",
-          "matchType": "Exact",
-          "note": "Addition"
-        },
-        {
-          "value": "ケンメイ",
-          "matchType": "Exact",
-          "note": "Addition"
-        }
-      ]
+      ],
+      "classification": "社内システム"
     },
     {
       "termId": "TERM_036",
@@ -933,7 +800,8 @@
           "value": "コウキュウ",
           "matchType": "Exact"
         }
-      ]
+      ],
+      "classification": "労務関連"
     },
     {
       "termId": "TERM_037",
@@ -959,7 +827,8 @@
           "matchType": "Exact",
           "note": "Addition"
         }
-      ]
+      ],
+      "classification": "庶務関連"
     },
     {
       "termId": "TERM_038",
@@ -982,7 +851,8 @@
           "value": "信号通信",
           "matchType": "Exact"
         }
-      ]
+      ],
+      "classification": "業務種別"
     },
     {
       "termId": "TERM_039",
@@ -1001,74 +871,8 @@
           "value": "シャシデン",
           "matchType": "Exact"
         }
-      ]
-    },
-    {
-      "termId": "TERM_040",
-      "canonicalTerm": "出札",
-      "meaning": "きっぷ等を販売する窓口",
-      "variants": [
-        {
-          "value": "出札",
-          "matchType": "Exact"
-        },
-        {
-          "value": "しゅっさつ",
-          "matchType": "Exact"
-        },
-        {
-          "value": "シュッサツ",
-          "matchType": "Exact"
-        }
-      ]
-    },
-    {
-      "termId": "TERM_041",
-      "canonicalTerm": "慫慂",
-      "meaning": "勧めること",
-      "variants": [
-        {
-          "value": "慫慂",
-          "matchType": "Exact"
-        },
-        {
-          "value": "商用",
-          "matchType": "Context Required",
-          "note": "Addition\nよくある誤変換として"
-        },
-        {
-          "value": "しょうよう",
-          "matchType": "Exact"
-        },
-        {
-          "value": "ショウヨウ",
-          "matchType": "Exact"
-        }
-      ]
-    },
-    {
-      "termId": "TERM_045",
-      "canonicalTerm": "総合企画課",
-      "meaning": "大阪工事事務所　総合企画課",
-      "variants": [
-        {
-          "value": "総企",
-          "matchType": "Exact"
-        },
-        {
-          "value": "そうき",
-          "matchType": "Exact"
-        },
-        {
-          "value": "ソウキ",
-          "matchType": "Exact"
-        },
-        {
-          "value": "総合企画課",
-          "matchType": "Exact",
-          "note": "Addition"
-        }
-      ]
+      ],
+      "classification": "組織名称"
     },
     {
       "termId": "TERM_046",
@@ -1091,23 +895,8 @@
           "value": "ダイカイ",
           "matchType": "Exact"
         }
-      ]
-    },
-    {
-      "termId": "TERM_047",
-      "canonicalTerm": "自分の時間",
-      "meaning": "勤務時間外のこと",
-      "variants": [
-        {
-          "value": "自分の時間",
-          "matchType": "Exact"
-        },
-        {
-          "value": "じぶんの時間",
-          "matchType": "Exact",
-          "note": "Addition"
-        }
-      ]
+      ],
+      "classification": "業務名"
     },
     {
       "termId": "TERM_050",
@@ -1130,7 +919,8 @@
           "value": "鉄道本部",
           "matchType": "Exact"
         }
-      ]
+      ],
+      "classification": "組織名称"
     },
     {
       "termId": "TERM_052",
@@ -1153,7 +943,8 @@
           "value": "中国統括本部",
           "matchType": "Exact"
         }
-      ]
+      ],
+      "classification": "組織名称"
     },
     {
       "termId": "TERM_054",
@@ -1184,7 +975,8 @@
           "value": "大阪工事事務所・大阪電気工事事務所",
           "matchType": "Exact"
         }
-      ]
+      ],
+      "classification": "組織名称"
     },
     {
       "termId": "TERM_055",
@@ -1211,7 +1003,8 @@
           "value": "地域まちづくり",
           "matchType": "Exact"
         }
-      ]
+      ],
+      "classification": "組織名称"
     },
     {
       "termId": "TERM_056",
@@ -1232,7 +1025,8 @@
           "matchType": "Exact",
           "note": "Addition"
         }
-      ]
+      ],
+      "classification": "組織名称"
     },
     {
       "termId": "TERM_057",
@@ -1255,38 +1049,8 @@
           "value": "超過勤務",
           "matchType": "Exact"
         }
-      ]
-    },
-    {
-      "termId": "TERM_059",
-      "canonicalTerm": "取り消し",
-      "meaning": "取り消し（とりけし）",
-      "variants": [
-        {
-          "value": "トケ",
-          "matchType": "Exact"
-        },
-        {
-          "value": "とけ",
-          "matchType": "Exact"
-        },
-        {
-          "value": "取り消し",
-          "matchType": "Exact"
-        },
-        {
-          "value": "取消",
-          "matchType": "Exact"
-        },
-        {
-          "value": "とりけし",
-          "matchType": "Exact"
-        },
-        {
-          "value": "トリケシ",
-          "matchType": "Exact"
-        }
-      ]
+      ],
+      "classification": "労務関連"
     },
     {
       "termId": "TERM_060",
@@ -1309,7 +1073,8 @@
           "value": "特別休日",
           "matchType": "Exact"
         }
-      ]
+      ],
+      "classification": "労務関連"
     },
     {
       "termId": "TERM_061",
@@ -1332,7 +1097,8 @@
           "value": "北陸新幹線",
           "matchType": "Exact"
         }
-      ]
+      ],
+      "classification": "資産"
     },
     {
       "termId": "TERM_068",
@@ -1351,7 +1117,8 @@
           "value": "ヤマカン",
           "matchType": "Exact"
         }
-      ]
+      ],
+      "classification": "組織名称"
     },
     {
       "termId": "TERM_069",
@@ -1370,26 +1137,8 @@
           "value": "リョコウシンセイ",
           "matchType": "Exact"
         }
-      ]
-    },
-    {
-      "termId": "TERM_072",
-      "canonicalTerm": "立案",
-      "meaning": "Wapsで起票すること",
-      "variants": [
-        {
-          "value": "立案",
-          "matchType": "Exact"
-        },
-        {
-          "value": "りつあん",
-          "matchType": "Exact"
-        },
-        {
-          "value": "リツアン",
-          "matchType": "Exact"
-        }
-      ]
+      ],
+      "classification": "労務関連"
     },
     {
       "termId": "TERM_073",
@@ -1420,7 +1169,8 @@
           "value": "老朽取り替え",
           "matchType": "Exact"
         }
-      ]
+      ],
+      "classification": "業務種別"
     },
     {
       "termId": "TERM_074",
@@ -1439,7 +1189,8 @@
           "value": "ワークライフバランスサポートナビ",
           "matchType": "Exact"
         }
-      ]
+      ],
+      "classification": "社内システム"
     },
     {
       "termId": "TERM_075",
@@ -1477,64 +1228,8 @@
           "matchType": "Exact",
           "note": "Addition"
         }
-      ]
-    },
-    {
-      "termId": "TERM_076",
-      "canonicalTerm": "3H（久しぶり・初めて・変化）",
-      "meaning": "久しぶり、初めて、変化",
-      "variants": [
-        {
-          "value": "3H",
-          "matchType": "Exact"
-        },
-        {
-          "value": "スリーエイチ",
-          "matchType": "Exact"
-        },
-        {
-          "value": "すりーえいち",
-          "matchType": "Exact"
-        },
-        {
-          "value": "さんえいち",
-          "matchType": "Exact",
-          "note": "Addition"
-        },
-        {
-          "value": "サンエイチ",
-          "matchType": "Exact",
-          "note": "Addition"
-        }
-      ]
-    },
-    {
-      "termId": "TERM_077",
-      "canonicalTerm": "3S（Speedy Support Service）",
-      "meaning": "[object Object]",
-      "variants": [
-        {
-          "value": "3S",
-          "matchType": "Exact"
-        },
-        {
-          "value": "スリーエス",
-          "matchType": "Exact"
-        },
-        {
-          "value": "すりーえす",
-          "matchType": "Exact"
-        },
-        {
-          "value": "さんえす",
-          "matchType": "Exact",
-          "note": "Addition"
-        },
-        {
-          "value": "Speedy Support Service",
-          "matchType": "Exact"
-        }
-      ]
+      ],
+      "classification": "社内システム"
     },
     {
       "termId": "TERM_078",
@@ -1558,7 +1253,8 @@
           "matchType": "Context Required",
           "note": "「ブラックボックス」のように、「名詞＋ボックス」として使われる場合は、この単語を指さない可能性が高い。"
         }
-      ]
+      ],
+      "classification": "外部サービス"
     },
     {
       "termId": "TERM_079",
@@ -1581,7 +1277,8 @@
           "value": "じーねっと",
           "matchType": "Exact"
         }
-      ]
+      ],
+      "classification": "社内システム"
     },
     {
       "termId": "TERM_082",
@@ -1612,7 +1309,8 @@
           "value": "ネクストキャリアステップ",
           "matchType": "Exact"
         }
-      ]
+      ],
+      "classification": "人事関連"
     },
     {
       "termId": "TERM_087",
@@ -1651,7 +1349,8 @@
           "value": "ワイズネットポータル",
           "matchType": "Exact"
         }
-      ]
+      ],
+      "classification": "社内システム"
     }
   ]
 }

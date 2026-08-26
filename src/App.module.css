@@ -1138,6 +1138,41 @@
   line-height: 29px;
 }
 
+.resultsCardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.downloadButton {
+  min-height: 34px;
+  padding: 7px 12px;
+  border: 1px solid var(--color-brand-700);
+  border-radius: var(--radius-field);
+  background: var(--color-surface);
+  color: var(--color-brand-700);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+.downloadButton:hover:not(:disabled) {
+  background: var(--color-brand-50);
+}
+
+.downloadButton:disabled {
+  border-color: var(--color-border);
+  color: var(--color-ink-soft);
+  cursor: not-allowed;
+}
+
+.downloadError {
+  margin: 12px 0 0 !important;
+  color: var(--color-error) !important;
+}
+
 .resultsCard > p {
   margin: 0;
   color: var(--color-ink-muted);
@@ -1190,13 +1225,19 @@
 }
 
 .resultsTable th:first-child {
-  width: 160px;
+  width: 140px;
   border-right: 1px solid var(--color-border-subtle);
 }
 
 .resultsTable th:nth-child(2),
 .resultsTable td:nth-child(2) {
-  width: 260px;
+  width: 210px;
+  border-right: 1px solid var(--color-border-subtle);
+}
+
+.resultsTable th:nth-child(3),
+.resultsTable td:nth-child(3) {
+  width: 100px;
   border-right: 1px solid var(--color-border-subtle);
 }
 

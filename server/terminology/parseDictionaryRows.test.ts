@@ -63,4 +63,71 @@ describe('parseDictionaryRows', () => {
       expect.objectContaining({ code: 'DUPLICATE_VARIANT' }),
     )
   })
+
+  it('reads Excel rich text and never carries metadata across a new incomplete Term_ID', () => {
+    const result = parseDictionaryRows([
+      {
+        termId: 'TERM_001',
+        canonicalTerm: '用語A',
+        meaning: '意味A',
+        variant: '用語A',
+        matchType: 'Exact',
+      },
+      {
+        termId: 'TERM_035',
+        variant: 'けんめい',
+        matchType: 'Context Required',
+      },
+      {
+        termId: 'TERM_036',
+        canonicalTerm: { richText: [{ text: '用語' }, { text: 'B' }] },
+        meaning: { richText: [{ text: '意味' }, { text: 'B' }] },
+        variant: '用語B',
+        matchType: 'Exact',
+      },
+    ])
+
+    expect(result.terms).toEqual([
+      expect.objectContaining({ termId: 'TERM_001', canonicalTerm: '用語A' }),
+      expect.objectContaining({
+        termId: 'TERM_036',
+        canonicalTerm: '用語B',
+        meaning: '意味B',
+      }),
+    ])
+    expect(result.warnings).toContainEqual(
+      expect.objectContaining({ code: 'INCOMPLETE_TERM' }),
+    )
+  })
+
+  it('ignores a second canonical term assigned to the same Term_ID', () => {
+    const result = parseDictionaryRows([
+      {
+        termId: 'TERM_087',
+        canonicalTerm: 'WISE-NETポータル',
+        meaning: '社内システム',
+        variant: 'WISE-NET',
+        matchType: 'Exact',
+      },
+      {
+        termId: 'TERM_087',
+        canonicalTerm: '主管部',
+        meaning: '組織名称',
+        variant: '主管部',
+        matchType: 'Context Required',
+      },
+      { variant: 'しゅかんぶ', matchType: 'Context Required' },
+    ])
+
+    expect(result.terms).toEqual([
+      expect.objectContaining({
+        termId: 'TERM_087',
+        canonicalTerm: 'WISE-NETポータル',
+        variants: [{ value: 'WISE-NET', matchType: 'Exact' }],
+      }),
+    ])
+    expect(result.warnings).toContainEqual(
+      expect.objectContaining({ code: 'CONFLICTING_TERM_METADATA' }),
+    )
+  })
 })

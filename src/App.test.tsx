@@ -143,6 +143,7 @@ describe('JR Term Assistant pages', () => {
               termId: 'TERM_001',
               displayTerm: 'イノ本',
               canonicalTerm: 'イノベーション本部',
+              classification: '組織名称',
               meaning: '組織名称',
               contextSentence: 'イノ本について確認します。',
               matchedVariants: ['イノ本'],
@@ -167,7 +168,12 @@ describe('JR Term Assistant pages', () => {
     expect(screen.getByText('イノ本', { selector: 'mark' })).toHaveClass(
       /contextTermHighlight/,
     )
-    expect(screen.getByText('組織名称')).toBeInTheDocument()
+    expect(screen.getAllByText('組織名称')).toHaveLength(2)
+    expect(screen.getByRole('columnheader', { name: '意味の推測' })).toBeInTheDocument()
+    expect(screen.getByRole('columnheader', { name: '分類' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Excelをダウンロード' }),
+    ).toBeInTheDocument()
     expect(screen.queryByText('Pattern / Results · 1440 × 900')).toBeNull()
   })
 

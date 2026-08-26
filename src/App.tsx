@@ -25,6 +25,7 @@ import stepBadge from './assets/step-badge.svg'
 import {
   analyzeTranscript,
   ApiClientError,
+  exportAnalysisResults,
   getDictionaryExamples,
   getSession,
   login,
@@ -606,6 +607,29 @@ type ResultsPageProps = ProtectedPageProps & {
 
 function ResultsPage({ analysis, analyzedAt, user, onLogout }: ResultsPageProps) {
   const resultCount = analysis?.results.length ?? 0
+  const [downloadError, setDownloadError] = useState('')
+
+  async function handleDownload() {
+    if (!analysis) return
+    setDownloadError('')
+    try {
+      const file = await exportAnalysisResults(analysis, analyzedAt)
+      const url = URL.createObjectURL(file)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = 'jr-term-analysis.xlsx'
+      document.body.append(link)
+      link.click()
+      link.remove()
+      URL.revokeObjectURL(url)
+    } catch (error) {
+      setDownloadError(
+        error instanceof Error
+          ? error.message
+          : 'Excelファイルを出力できませんでした。',
+      )
+    }
+  }
 
   return (
     <main className={styles.uploadPage} data-testid="results-page">
@@ -625,8 +649,20 @@ function ResultsPage({ analysis, analyzedAt, user, onLogout }: ResultsPageProps)
             </p>
 
             <div className={styles.resultsCard}>
-              <h2>検出結果</h2>
-              <p>{resultCount}件の社内用語を検出</p>
+              <div className={styles.resultsCardHeader}>
+                <div>
+                  <h2>検出結果</h2>
+                  <p>{resultCount}件の社内用語を検出</p>
+                </div>
+                <button
+                  className={styles.downloadButton}
+                  type="button"
+                  onClick={() => void handleDownload()}
+                  disabled={!analysis}
+                >
+                  Excelをダウンロード
+                </button>
+              </div>
               {resultCount > 0 ? (
                 <div className={styles.resultsTableScroll}>
                   <table className={styles.resultsTable}>
@@ -634,7 +670,8 @@ function ResultsPage({ analysis, analyzedAt, user, onLogout }: ResultsPageProps)
                       <tr>
                         <th scope="col">検出された社内用語</th>
                         <th scope="col">出現した発話</th>
-                        <th scope="col">意味</th>
+                        <th scope="col">分類</th>
+                        <th scope="col">意味の推測</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -652,6 +689,7 @@ function ResultsPage({ analysis, analyzedAt, user, onLogout }: ResultsPageProps)
                               term={item.displayTerm}
                             />
                           </td>
+                          <td>{item.classification ?? '—'}</td>
                           <td>
                             <span>{item.meaning}</span>
                             <small>{item.occurrenceCount}回検出</small>
@@ -666,10 +704,15 @@ function ResultsPage({ analysis, analyzedAt, user, onLogout }: ResultsPageProps)
                   社内用語辞書に登録されている用語は検出されませんでした。
                 </p>
               )}
+              {downloadError && (
+                <p className={styles.downloadError} role="alert">
+                  {downloadError}
+                </p>
+              )}
             </div>
 
             <p className={styles.resultsNote}>
-              意味は登録済み辞書の説明を表示しています。
+              社内用語辞書と発話の前後文脈をもとに、会議内での意味を推測しています。
             </p>
           </div>
 
@@ -683,7 +726,7 @@ function ResultsPage({ analysis, analyzedAt, user, onLogout }: ResultsPageProps)
               <img src={mascotResultsHelper} alt="検出結果を案内するキャラクター" />
               <div>
                 <h2 id="results-hints-title">検出結果の見方</h2>
-                <p>辞書の情報をもとに表示しています。</p>
+                <p>辞書と発話の文脈をもとに表示しています。</p>
               </div>
             </div>
             <div className={styles.contextDivider} />

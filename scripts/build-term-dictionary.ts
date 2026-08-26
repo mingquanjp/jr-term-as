@@ -28,7 +28,44 @@ function cellText(value: ExcelJS.CellValue): string {
 
 async function buildDictionary() {
   const sourcePath = path.resolve('data/jr-terms.xlsx')
+  const legacySourcePath = path.resolve('data/jr-terms.legacy.xlsx')
   const outputPath = path.resolve('data/jr-terms.generated.json')
+
+  const sourceRows = await readDictionaryRows(sourcePath)
+  const legacyRows = await readDictionaryRows(legacySourcePath)
+  const sourceResult = parseDictionaryRows(sourceRows)
+  const legacyResult = parseDictionaryRows(legacyRows)
+  const legacyMeanings = new Map(
+    legacyResult.terms.map((term) => [term.termId, term.meaning]),
+  )
+
+  const result = {
+    ...sourceResult,
+    terms: sourceResult.terms.map((term) => ({
+      ...term,
+      // v2 Meaning is a category. Keep the older JR-reviewed description as the
+      // definition used for context inference when the Term_ID remains valid.
+      classification: term.meaning,
+      meaning: legacyMeanings.get(term.termId) ?? term.meaning,
+    })),
+  }
+
+  const dictionary: GeneratedDictionary = {
+    generatedAt: new Date().toISOString(),
+    source: path.basename(sourcePath),
+    terms: result.terms,
+  }
+
+  await mkdir(path.dirname(outputPath), { recursive: true })
+  await writeFile(outputPath, `${JSON.stringify(dictionary, null, 2)}\n`, 'utf8')
+
+  result.warnings.forEach((warning) =>
+    console.warn(`[${warning.code}] ${warning.message}`),
+  )
+  console.log(JSON.stringify(result.stats, null, 2))
+}
+
+async function readDictionaryRows(sourcePath: string): Promise<DictionaryRow[]> {
   const workbook = new ExcelJS.Workbook()
   await workbook.xlsx.readFile(sourcePath)
 
@@ -70,20 +107,7 @@ async function buildDictionary() {
     })
   }
 
-  const result = parseDictionaryRows(rows)
-  const dictionary: GeneratedDictionary = {
-    generatedAt: new Date().toISOString(),
-    source: path.basename(sourcePath),
-    terms: result.terms,
-  }
-
-  await mkdir(path.dirname(outputPath), { recursive: true })
-  await writeFile(outputPath, `${JSON.stringify(dictionary, null, 2)}\n`, 'utf8')
-
-  result.warnings.forEach((warning) =>
-    console.warn(`[${warning.code}] ${warning.message}`),
-  )
-  console.log(JSON.stringify(result.stats, null, 2))
+  return rows
 }
 
 buildDictionary().catch((error: unknown) => {

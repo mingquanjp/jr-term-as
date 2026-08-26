@@ -38,7 +38,7 @@ pnpm dev
 
 `pnpm dev` starts:
 
-- Frontend: `http://127.0.0.1:5173`
+- Frontend: `http://127.0.0.1:5174`
 - API: `http://127.0.0.1:3001`
 
 ### Optional: Qwen Context Gate
@@ -60,8 +60,24 @@ QWEN_CONTEXT_GATE_MODE=risky
 3. Start `pnpm dev` as usual.
 
 `risky` validates `Context Required` variants and short forms (for example,
-`うや` and `とけ`). `all` validates every matched occurrence and is the more
-conservative option for a stakeholder demo.
+`うや` and `とけ`) while directly retaining the other `Exact` matches. `all`
+validates every match and is slower; use it only after testing the target
+transcript.
+
+### Qwen context evaluation
+
+`test/fixtures/qwen-context-evaluation.json` contains anonymized, synthetic
+positive and negative examples for every v2 `Context Required` variant. Its
+labels are an internal draft (`JRレビュー待ち`), not JR-approved ground truth.
+After the SSH tunnel is running and Qwen is enabled, run:
+
+```bash
+pnpm qwen:evaluate
+```
+
+The command reports TP, FP, FN, TN, precision, recall, and the individual
+incorrect case IDs. Ask JR reviewers to approve or correct the expected labels
+before citing the metric externally.
 
 To choose the initial admin credentials instead of generating a password:
 
@@ -90,6 +106,7 @@ pnpm check
 ```text
 data/
 ├─ jr-terms.xlsx
+├─ jr-terms.legacy.xlsx           # detailed definitions retained for Qwen
 ├─ jr-terms.generated.json
 └─ users.json                    # local only, ignored by Git
 scripts/
@@ -118,7 +135,16 @@ test/fixtures/
 
 ## Dictionary behavior
 
-The source workbook is `data/jr-terms.xlsx`. The build script reads only the `社内用語辞書_統合版` sheet, locates the required headers without relying on a fixed row number, forward-fills grouped `Term_ID`, `Canonical_Term`, and `Meaning` cells, and writes `data/jr-terms.generated.json`.
+The reviewed v2 workbook is `data/jr-terms.xlsx`. The build script reads only
+the `社内用語辞書_統合版` sheet, locates required headers without relying on a
+fixed row number, reads Excel rich-text cells, and writes
+`data/jr-terms.generated.json`. The v2 `Meaning` is stored as a broad
+classification; for still-valid Term_IDs, the detailed JR-reviewed description
+from `data/jr-terms.legacy.xlsx` is retained for Qwen context validation.
+
+Rows with incomplete metadata or one Term_ID assigned to multiple canonical
+terms are skipped with build warnings. They are never silently assigned to a
+previous term.
 
 Runtime behavior is intentionally strict:
 
@@ -166,9 +192,21 @@ GET /api/dictionary/examples
 
 The landing page uses this endpoint so its example rows also come from the generated dictionary instead of mock data.
 
+### Excel export
+
+```text
+POST /api/export-results
+```
+
+The authenticated results page sends only its displayed, accepted results to
+this endpoint and downloads an `.xlsx` file with the detected term, official
+name, inferred meaning, context sentence, and occurrence count.
+
 ## Data handling
 
-- No OpenAI, Copilot, Gemini, LLM, RAG, embeddings, fuzzy matching, or semantic search.
+- Qwen is optional and receives only a candidate term, relevant JR dictionary
+  information, and a short previous/current/next context window through the
+  configured SSH tunnel. It never receives the full workbook or transcript.
 - No transcript content is stored in localStorage, sessionStorage, IndexedDB, a database, or permanent files.
 - The two provided JR transcripts are used only for local verification and are not copied into the repository.
 - `Context Required` resolution is intentionally outside the current phase.

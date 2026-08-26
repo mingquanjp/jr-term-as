@@ -3,6 +3,7 @@ import { tmpdir } from 'node:os'
 import path from 'node:path'
 
 import bcrypt from 'bcryptjs'
+import ExcelJS from 'exceljs'
 import request from 'supertest'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
@@ -75,5 +76,50 @@ describe('API', () => {
       displayTerm: 'イノ本',
       contextSentence: 'イノ本とUKについて確認します。',
     })
+  })
+
+  it('exports accepted analysis results as an Excel file', async () => {
+    const agent = request.agent(app)
+    await agent.post('/api/auth/login').send({ email, password })
+
+    const response = await agent
+      .post('/api/export-results')
+      .buffer(true)
+      .parse((response, callback) => {
+        const chunks: Buffer[] = []
+        response.on('data', (chunk: Buffer) => chunks.push(chunk))
+        response.on('end', () => callback(null, Buffer.concat(chunks)))
+      })
+      .send({
+        fileName: 'demo.docx',
+        analyzedAt: '2026-08-26T10:00:00.000Z',
+        results: [
+          {
+            termId: 'TERM_001',
+            displayTerm: 'イノ本',
+            canonicalTerm: 'イノベーション本部',
+            classification: '組織名称',
+            meaning: 'イノベーションを推進する本部',
+            contextSentence: 'イノ本と連携します。',
+            matchedVariants: ['イノ本'],
+            occurrenceCount: 1,
+            firstOccurrenceIndex: 0,
+          },
+        ],
+      })
+
+    expect(response.status).toBe(200)
+    expect(response.headers['content-type']).toContain(
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    )
+    expect(response.body).toBeInstanceOf(Buffer)
+    expect(response.body.length).toBeGreaterThan(1000)
+
+    const workbook = new ExcelJS.Workbook()
+    await workbook.xlsx.load(response.body)
+    const sheet = workbook.getWorksheet('解析結果')
+    expect(sheet?.getCell('A3').value).toBe('検出された社内用語')
+    expect(sheet?.getCell('C4').value).toBe('組織名称')
+    expect(sheet?.getCell('D4').value).toBe('イノベーションを推進する本部')
   })
 })

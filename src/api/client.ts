@@ -62,6 +62,24 @@ export async function analyzeTranscript(
   return parseResponse<AnalyzeTranscriptResponse>(response)
 }
 
+export async function exportAnalysisResults(
+  analysis: AnalyzeTranscriptResponse,
+  analyzedAt: Date | null,
+): Promise<Blob> {
+  const response = await fetch('/api/export-results', {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      fileName: analysis.file.name,
+      analyzedAt: analyzedAt?.toISOString() ?? '',
+      results: analysis.results,
+    }),
+  })
+  if (!response.ok) await parseResponse(response)
+  return response.blob()
+}
+
 export async function getDictionaryExamples(): Promise<DictionaryExample[]> {
   const response = await fetch('/api/dictionary/examples')
   const body = await parseResponse<{

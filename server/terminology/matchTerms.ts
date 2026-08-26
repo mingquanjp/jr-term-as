@@ -12,6 +12,7 @@ type MatchCandidate = {
   term: TermEntry
   normalizedVariant: string
   matchType: MatchType
+  note?: string
   startsWithLatinAlphanumeric: boolean
   endsWithLatinAlphanumeric: boolean
 }
@@ -20,6 +21,8 @@ export type TermMatchOccurrence = {
   termId: string
   canonicalTerm: string
   meaning: string
+  classification?: string
+  variantNote?: string
   displayTerm: string
   matchedVariant: string
   matchType: MatchType
@@ -73,6 +76,7 @@ export function findTermOccurrences(
             term,
             normalizedVariant,
             matchType: variant.matchType,
+            note: variant.note,
             startsWithLatinAlphanumeric: /^[a-z0-9]/i.test(normalizedVariant),
             endsWithLatinAlphanumeric: /[a-z0-9]$/i.test(normalizedVariant),
           },
@@ -133,6 +137,8 @@ export function findTermOccurrences(
         termId: candidate.term.termId,
         canonicalTerm: candidate.term.canonicalTerm,
         meaning: candidate.term.meaning,
+        classification: candidate.term.classification,
+        variantNote: candidate.note,
         displayTerm,
         matchedVariant: candidate.normalizedVariant,
         matchType: candidate.matchType,
@@ -158,6 +164,7 @@ export function groupTermOccurrences(
         termId: occurrence.termId,
         displayTerm: occurrence.displayTerm,
         canonicalTerm: occurrence.canonicalTerm,
+        classification: occurrence.classification,
         meaning: occurrence.meaning,
         contextSentence: occurrence.contextSentence,
         matchedVariants: [],
@@ -180,6 +187,7 @@ export function groupTermOccurrences(
       termId: result.termId,
       displayTerm: result.displayTerm,
       canonicalTerm: result.canonicalTerm,
+      classification: result.classification,
       meaning: result.meaning,
       contextSentence: result.contextSentence,
       matchedVariants: [...result.matchedVariantIndexes.entries()]
