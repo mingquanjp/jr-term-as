@@ -1,0 +1,1657 @@
+{
+  "generatedAt": "2026-08-26T00:18:20.916Z",
+  "source": "jr-terms.xlsx",
+  "terms": [
+    {
+      "termId": "TERM_001",
+      "canonicalTerm": "イノベーション本部",
+      "meaning": "組織名称",
+      "variants": [
+        {
+          "value": "イノベーション本部",
+          "matchType": "Exact"
+        },
+        {
+          "value": "イノ本",
+          "matchType": "Exact"
+        },
+        {
+          "value": "イノホン",
+          "matchType": "Exact"
+        },
+        {
+          "value": "イノベ本部",
+          "matchType": "Exact"
+        },
+        {
+          "value": "イノベーション本",
+          "matchType": "Exact"
+        },
+        {
+          "value": "イノベーションほんぶ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "イノベーションホンブ",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_002",
+      "canonicalTerm": "経営企画部",
+      "meaning": "組織名称",
+      "variants": [
+        {
+          "value": "経営企画部",
+          "matchType": "Exact"
+        },
+        {
+          "value": "経企",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ケイキ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "けいき",
+          "matchType": "Exact"
+        },
+        {
+          "value": "経営企画",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ケイエイキカク部",
+          "matchType": "Exact"
+        },
+        {
+          "value": "けいえいきかくぶ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "経営企画ぶ",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_003",
+      "canonicalTerm": "システムマネジメント部",
+      "meaning": "組織名称",
+      "variants": [
+        {
+          "value": "システムマネジメント部",
+          "matchType": "Exact"
+        },
+        {
+          "value": "シスマネ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "シスマネ部",
+          "matchType": "Exact"
+        },
+        {
+          "value": "システムマネジメント",
+          "matchType": "Exact"
+        },
+        {
+          "value": "システムマネージメント部",
+          "matchType": "Exact"
+        },
+        {
+          "value": "システムマネージメント",
+          "matchType": "Exact"
+        },
+        {
+          "value": "しすてむまねじめんと部",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_004",
+      "canonicalTerm": "ASTRO",
+      "meaning": "・JR西日本グループにおける生成AI活用を全社横断で推進する司令塔組織（ワーキンググループ）\n\n・ASTROは、会社全体の生成AI活用を推進するための横断体制であり、主に以下を担当している\n>全社的な生成AI戦略の策定\n>M365 CopilotやAIP（AI-Partner）の利活用推進\n>生成AI人財育成・リテラシー向上\n>AI GatewayやローカルLLMなどの基盤整備\n>生成AIガバナンス・セキュリティ対応\n>各主管部の生成AIテーマの実装支援\n>鉄道業務への生成AI適用検討と進捗管理",
+      "variants": [
+        {
+          "value": "ASTRO",
+          "matchType": "Exact"
+        },
+        {
+          "value": "アストロ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "あすとろ",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_005",
+      "canonicalTerm": "鉄道用語特化型LLM",
+      "meaning": "鉄道業界特有の専門用語・略語・規程・業務ルールを理解できるようにした大規模言語モデル",
+      "variants": [
+        {
+          "value": "鉄道用語特化型LLM",
+          "matchType": "Exact"
+        },
+        {
+          "value": "鉄道LLM",
+          "matchType": "Exact"
+        },
+        {
+          "value": "鉄道用語LLM",
+          "matchType": "Exact"
+        },
+        {
+          "value": "鉄道特化LLM",
+          "matchType": "Exact"
+        },
+        {
+          "value": "鉄道用語特化LLM",
+          "matchType": "Exact"
+        },
+        {
+          "value": "鉄道用語特化型エルエルエム",
+          "matchType": "Exact"
+        },
+        {
+          "value": "てつどうエルエルエム",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_006",
+      "canonicalTerm": "施策費",
+      "meaning": "・会社の戦略や課題解決のために実施する施策へ投入する予算\n\n・施策（取り組み・プロジェクト）を実施するために確保する予算や経費を指す。単なる維持運営費ではなく、会社や組織の目標達成のために行う新たな取り組みへの支出という意味で使われることが多い\n\n・設備投資ではなく、コンサル費・委託費・教育費・調査費などの損益予算（経費）として計上される案件予算を指す",
+      "variants": [
+        {
+          "value": "施策費",
+          "matchType": "Exact"
+        },
+        {
+          "value": "しさくひ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "シサクヒ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "施策ひ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "施策費用",
+          "matchType": "Exact"
+        },
+        {
+          "value": "施策の費用",
+          "matchType": "Exact"
+        },
+        {
+          "value": "せさくひ",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "セサクヒ",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "せさく費",
+          "matchType": "Exact",
+          "note": "Addition"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_007",
+      "canonicalTerm": "技術変革G",
+      "meaning": "・イノベーション本部の中にある組織名称\n・正式名称は「イノベーション本部 技術変革グループ」",
+      "variants": [
+        {
+          "value": "技術変革G",
+          "matchType": "Exact"
+        },
+        {
+          "value": "技術変革グループ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "技術変革ジー",
+          "matchType": "Exact"
+        },
+        {
+          "value": "技変"
+        },
+        {
+          "value": "ぎじゅつへんかくG",
+          "matchType": "Exact"
+        },
+        {
+          "value": "技術変革",
+          "matchType": "Exact",
+          "note": "Addition"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_008",
+      "canonicalTerm": "鉄道DX部",
+      "meaning": "・イノベーション本部の中にある組織名称\n・正式名称は「イノベーション本部 鉄道DX部」",
+      "variants": [
+        {
+          "value": "鉄道DX部",
+          "matchType": "Exact"
+        },
+        {
+          "value": "鉄道DX",
+          "matchType": "Exact"
+        },
+        {
+          "value": "DX部",
+          "matchType": "Exact"
+        },
+        {
+          "value": "鉄道ディーエックス部",
+          "matchType": "Exact"
+        },
+        {
+          "value": "てつどうDX部",
+          "matchType": "Exact"
+        },
+        {
+          "value": "てつどうディーエックス部",
+          "matchType": "Exact"
+        },
+        {
+          "value": "鉄D部",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "鉄D",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "てつでぃー",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "てつでぃーぶ",
+          "matchType": "Exact",
+          "note": "Addition"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_009",
+      "canonicalTerm": "技術戦略G",
+      "meaning": "・イノベーション本部の中にある組織名称\n・正式名称は「イノベーション本部 企画・技術戦略グループ」",
+      "variants": [
+        {
+          "value": "技術戦略G",
+          "matchType": "Exact"
+        },
+        {
+          "value": "技術戦略グループ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "技術戦略ジー",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ぎじゅつせんりゃくG",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ぎじゅつせんりゃくじー",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "ぎじゅつせんりゃくぐるーぷ",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "技術戦略",
+          "matchType": "Exact"
+        },
+        {
+          "value": "企画・技術戦略",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "企画・技術戦略G",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "きかくぎじゅつせんりゃくG",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "きかくぎじゅつせんりゃくじー",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "きかくぎじゅつせんりゃくぐるーぷ",
+          "matchType": "Exact",
+          "note": "Addition"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_010",
+      "canonicalTerm": "ゲート判定",
+      "meaning": "・JR西日本 イノベーション本部の「システム内製開発ガイドライン」に記載されている用語で、イノベーション本部の内製開発に携わる部門におけるシステム内製開発について、マイルストーン到達時に、継続可否、次工程移行可否またはリリース可否を判定する統制上の判断点を指す",
+      "variants": [
+        {
+          "value": "ゲート判定",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ゲート",
+          "matchType": "Context Required"
+        },
+        {
+          "value": "ゲートはんてい",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ゲートハンテイ",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_011",
+      "canonicalTerm": "共創ソリューション本部",
+      "meaning": "組織名称",
+      "variants": [
+        {
+          "value": "共創ソリューション本部",
+          "matchType": "Exact"
+        },
+        {
+          "value": "共創本部",
+          "matchType": "Exact"
+        },
+        {
+          "value": "共創本",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "きょうそうほん",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "共ソリ本部",
+          "matchType": "Exact"
+        },
+        {
+          "value": "きょうそり",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "きょうそりゅ",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "共創ソリューション",
+          "matchType": "Exact"
+        },
+        {
+          "value": "共創ソリ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "共ソリュ",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "きょうそうソリューション本部",
+          "matchType": "Exact"
+        },
+        {
+          "value": "キョウソウソリューション本部",
+          "matchType": "Exact"
+        },
+        {
+          "value": "共創ソリューションほんぶ",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_012",
+      "canonicalTerm": "DX・AI人財開発室",
+      "meaning": "・共創ソリューション本部の中にある組織名称\n・正式名称は「共創ソリューション本部 DX・AI人財開発室」",
+      "variants": [
+        {
+          "value": "DX・AI人財開発室",
+          "matchType": "Exact"
+        },
+        {
+          "value": "DXAI人財開発室",
+          "matchType": "Exact"
+        },
+        {
+          "value": "DX・AI人材開発室",
+          "matchType": "Exact"
+        },
+        {
+          "value": "DXAI人材開発室",
+          "matchType": "Exact"
+        },
+        {
+          "value": "DX AI 人財開発室",
+          "matchType": "Exact"
+        },
+        {
+          "value": "人財開発室",
+          "matchType": "Context Required"
+        },
+        {
+          "value": "ディーエックス・エーアイ人財開発室",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_013",
+      "canonicalTerm": "DataHub",
+      "meaning": "・JR西日本 鉄道本部における複数システムや部門に分散するデータを集約・統合し、必要な利用者やシステムへ適切に提供するための中継・連携基盤のこと。イノベーション本部にて検討を行っている。\n\n・鉄道本部のSoR/SoE領域のデータ連携基盤で、トランザクションデータの収集・統合・提供基盤、、共通マスタ配信基盤（マスタデータハブ）、データの意味統合・標準化を行う基盤という役割がある\n\n・分析基盤ではなく、業務システム間のデータ連携やマスターデータ配信を担う基盤",
+      "variants": [
+        {
+          "value": "Data Hub",
+          "matchType": "Exact"
+        },
+        {
+          "value": "DataHub",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "鉄道DataHub",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "鉄道データハブ",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "データハブ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "データHub",
+          "matchType": "Exact"
+        },
+        {
+          "value": "データ・ハブ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "でーたはぶ",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_014",
+      "canonicalTerm": "MDM",
+      "meaning": "・JR西日本 鉄道本部が保有するマスタデータを一元管理し、その品質・整合性・ガバナンスを維持するための仕組みと活動全体のこと。イノベーション本部にて検討を行っている\n\n・駅・路線・線区・設備などの鉄道業務で共通利用するマスタデータについて、系統横断で共通の“正しい定義”を作り、将来のEAMや輸送計画システムなどへ配信できるようにする取り組み",
+      "variants": [
+        {
+          "value": "MDM",
+          "matchType": "Exact"
+        },
+        {
+          "value": "鉄道MDM",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "エムディーエム",
+          "matchType": "Exact"
+        },
+        {
+          "value": "エムディエム",
+          "matchType": "Exact"
+        },
+        {
+          "value": "マスターデータ管理",
+          "matchType": "Exact"
+        },
+        {
+          "value": "マスターデータマネジメント",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "鉄道マスターデータマネジメント",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "Master Data Management",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_015",
+      "canonicalTerm": "輸送計画システム",
+      "meaning": "・「輸送計画システム」のこと\n・列車をいつ・どこを・どの車両で・誰が運転するかを計画し、その情報を鉄道現場へ展開するシステム\n・主な機能として、列車のダイヤ作成やどの列車にどの車両を割り当てるかを決める「車両運用計画」、乗務員の運用計画、運転報などの現場向け情報配信がある",
+      "variants": [
+        {
+          "value": "輸計",
+          "matchType": "Exact"
+        },
+        {
+          "value": "UK",
+          "matchType": "Context Required",
+          "note": "イギリスを指す「UK」との区別が必要"
+        },
+        {
+          "value": "輸送計画",
+          "matchType": "Context Required",
+          "note": "「輸送計画」は単体の用語として存在"
+        },
+        {
+          "value": "ゆけい",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ユケイ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "U計",
+          "matchType": "Exact"
+        },
+        {
+          "value": "輸送計画システム",
+          "matchType": "Exact"
+        },
+        {
+          "value": "輸計システム",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_016",
+      "canonicalTerm": "グループ方針",
+      "meaning": "・「グループ方針」のこと",
+      "variants": [
+        {
+          "value": "G方針",
+          "matchType": "Exact"
+        },
+        {
+          "value": "グループ方針",
+          "matchType": "Context Required",
+          "note": "「JR西日本グループ」との区別が必要"
+        },
+        {
+          "value": "ぐるーぷほうしん",
+          "matchType": "Exact"
+        },
+        {
+          "value": "グループホウシン",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_017",
+      "canonicalTerm": "Lightblue",
+      "meaning": "・JR西日本で導入されている生成AIサービスで、社内情報を活用した回答機能（RAG）やアシスタント機能を持つ。\n・Lightblueは株式会社Lightblueが提供する生成AIサービスで、ChatGPTのような対話型AIに加えて、企業内の文書やナレッジを参照して回答できる機能を持つ。\n・社内情報を読ませて回答させることができる\n用途別の「アシスタント」を作成できる\n複数のLLM（大規模言語モデル）を用途に応じて選択できる",
+      "variants": [
+        {
+          "value": "Lightblue",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ライトブルー",
+          "matchType": "Exact"
+        },
+        {
+          "value": "LightBlue",
+          "matchType": "Exact"
+        },
+        {
+          "value": "lightblue",
+          "matchType": "Exact"
+        },
+        {
+          "value": "LIGHTBLUE",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_018",
+      "canonicalTerm": "IPD基盤",
+      "meaning": "・Information Providing Databaseの略称で鉄道運行系リアルタイムデータを各システムへ提供するためのデジタル基盤 と定義されている。\n\n・運行管理システムやRis-eなどが持つリアルタイムデータを集約し、APIで他システムへ提供する共通データ基盤である",
+      "variants": [
+        {
+          "value": "IPD基盤",
+          "matchType": "Exact"
+        },
+        {
+          "value": "アイピーディー基盤",
+          "matchType": "Exact"
+        },
+        {
+          "value": "あいぴーでぃーきばん",
+          "matchType": "Exact"
+        },
+        {
+          "value": "IPD",
+          "matchType": "Exact"
+        },
+        {
+          "value": "アイピーディー",
+          "matchType": "Exact"
+        },
+        {
+          "value": "あいぴーでぃー",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_020",
+      "canonicalTerm": "[object Object]",
+      "meaning": "京阪神エリアをさす",
+      "variants": [
+        {
+          "value": "アーバン",
+          "matchType": "Exact"
+        },
+        {
+          "value": "アーバンエリア",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_021",
+      "canonicalTerm": "安全衛生",
+      "meaning": "安全衛生の略",
+      "variants": [
+        {
+          "value": "安衛",
+          "matchType": "Exact"
+        },
+        {
+          "value": "あんえい",
+          "matchType": "Exact"
+        },
+        {
+          "value": "アンエイ",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_022",
+      "canonicalTerm": "安全推進部",
+      "meaning": "安全推進部",
+      "variants": [
+        {
+          "value": "安推",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "あんすい",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "アンスイ",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "安全推進",
+          "matchType": "Context Required",
+          "note": "「安全推進」も1つの用語として存在"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_023",
+      "canonicalTerm": "一件一葉",
+      "meaning": "費用計画や設備投資計画時に1分析コード毎に作成する書類",
+      "variants": [
+        {
+          "value": "一件一葉",
+          "matchType": "Exact"
+        },
+        {
+          "value": "いっけんいちよう",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "イッケンイチヨウ",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "一見一様",
+          "matchType": "Context Required",
+          "note": "Addition\nよくある誤変換として"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_025",
+      "canonicalTerm": "運転休止",
+      "meaning": "運転休止",
+      "variants": [
+        {
+          "value": "ウヤ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "うや",
+          "matchType": "Exact"
+        },
+        {
+          "value": "運休",
+          "matchType": "Exact"
+        },
+        {
+          "value": "運転休止",
+          "matchType": "Exact",
+          "note": "Addition"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_027",
+      "canonicalTerm": "系統",
+      "meaning": "いわゆる部署、部門的な意味合い",
+      "variants": [
+        {
+          "value": "系統",
+          "matchType": "Context Required",
+          "note": "一般的に使われる「系統」との棲み分けが必要"
+        },
+        {
+          "value": "けいとう",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "ケイトウ",
+          "matchType": "Exact",
+          "note": "Addition"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_028",
+      "canonicalTerm": "近畿統括本部",
+      "meaning": "近畿統括本部",
+      "variants": [
+        {
+          "value": "近統",
+          "matchType": "Exact"
+        },
+        {
+          "value": "きんとう",
+          "matchType": "Exact"
+        },
+        {
+          "value": "キントウ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "均等",
+          "matchType": "Context Required",
+          "note": "Addition\nよくある誤変換として"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_029",
+      "canonicalTerm": "企画",
+      "meaning": "基幹運営のこと",
+      "variants": [
+        {
+          "value": "企画",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_030",
+      "canonicalTerm": "クラウドキャンパス",
+      "meaning": "社員向けのｅラーニング用のサイト",
+      "variants": [
+        {
+          "value": "クラウドキャンパス",
+          "matchType": "Exact"
+        },
+        {
+          "value": "Cloud Campus",
+          "matchType": "Exact"
+        },
+        {
+          "value": "CloudCampus",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_034",
+      "canonicalTerm": "確認会話",
+      "meaning": "言い間違い・聞き間違いによる誤解、伝達ミスやヒューマンエラーを防ぐことを目的に、相互に内容を都度確認しながらコミュニケーションをとることや、その会話方法",
+      "variants": [
+        {
+          "value": "確認会話",
+          "matchType": "Exact"
+        },
+        {
+          "value": "かくにんかいわ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "カクニンカイワ",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_035",
+      "canonicalTerm": "件名",
+      "meaning": "取り組みの一単位",
+      "variants": [
+        {
+          "value": "件名",
+          "matchType": "Exact"
+        },
+        {
+          "value": "県名",
+          "matchType": "Context Required",
+          "note": "Addition\nよくある誤変換として"
+        },
+        {
+          "value": "けんめい",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "ケンメイ",
+          "matchType": "Exact",
+          "note": "Addition"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_036",
+      "canonicalTerm": "公休",
+      "meaning": "第1種休日制の社員において、日曜日のこと",
+      "variants": [
+        {
+          "value": "公休",
+          "matchType": "Exact"
+        },
+        {
+          "value": "こうきゅう",
+          "matchType": "Exact"
+        },
+        {
+          "value": "コウキュウ",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_037",
+      "canonicalTerm": "事務連絡",
+      "meaning": "社内相互間であって比較的軽微な案件であるが、業務遂行上発せざるを得ない場合、箇所長等がその職務に基づき発することができる文書",
+      "variants": [
+        {
+          "value": "事務連絡",
+          "matchType": "Exact"
+        },
+        {
+          "value": "事務連",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "ジムレン",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "じむれん",
+          "matchType": "Exact",
+          "note": "Addition"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_038",
+      "canonicalTerm": "信号通信",
+      "meaning": "信号通信のこと",
+      "variants": [
+        {
+          "value": "信通",
+          "matchType": "Exact"
+        },
+        {
+          "value": "しんつう",
+          "matchType": "Exact"
+        },
+        {
+          "value": "シンツウ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "信号通信",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_039",
+      "canonicalTerm": "車両部・施設部・電気部",
+      "meaning": "車両・施設・電気（これに駅業務と運輸が加わると「えきうんしゃしんでん」となるそうです）",
+      "variants": [
+        {
+          "value": "車施電",
+          "matchType": "Exact"
+        },
+        {
+          "value": "しゃしでん",
+          "matchType": "Exact"
+        },
+        {
+          "value": "シャシデン",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_040",
+      "canonicalTerm": "出札",
+      "meaning": "きっぷ等を販売する窓口",
+      "variants": [
+        {
+          "value": "出札",
+          "matchType": "Exact"
+        },
+        {
+          "value": "しゅっさつ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "シュッサツ",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_041",
+      "canonicalTerm": "慫慂",
+      "meaning": "勧めること",
+      "variants": [
+        {
+          "value": "慫慂",
+          "matchType": "Exact"
+        },
+        {
+          "value": "商用",
+          "matchType": "Context Required",
+          "note": "Addition\nよくある誤変換として"
+        },
+        {
+          "value": "しょうよう",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ショウヨウ",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_045",
+      "canonicalTerm": "総合企画課",
+      "meaning": "大阪工事事務所　総合企画課",
+      "variants": [
+        {
+          "value": "総企",
+          "matchType": "Exact"
+        },
+        {
+          "value": "そうき",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ソウキ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "総合企画課",
+          "matchType": "Exact",
+          "note": "Addition"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_046",
+      "canonicalTerm": "ダイヤ改正",
+      "meaning": "ダイヤ改正",
+      "variants": [
+        {
+          "value": "ダイ改",
+          "matchType": "Exact"
+        },
+        {
+          "value": "だいかい",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ダイヤ改正",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ダイカイ",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_047",
+      "canonicalTerm": "自分の時間",
+      "meaning": "勤務時間外のこと",
+      "variants": [
+        {
+          "value": "自分の時間",
+          "matchType": "Exact"
+        },
+        {
+          "value": "じぶんの時間",
+          "matchType": "Exact",
+          "note": "Addition"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_050",
+      "canonicalTerm": "鉄道本部",
+      "meaning": "鉄道本部",
+      "variants": [
+        {
+          "value": "鉄本",
+          "matchType": "Exact"
+        },
+        {
+          "value": "てっぽん",
+          "matchType": "Exact"
+        },
+        {
+          "value": "テッポン",
+          "matchType": "Exact"
+        },
+        {
+          "value": "鉄道本部",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_052",
+      "canonicalTerm": "中国統括本部",
+      "meaning": "中国統括本部",
+      "variants": [
+        {
+          "value": "中統",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ちゅうとう",
+          "matchType": "Exact"
+        },
+        {
+          "value": "チュウトウ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "中国統括本部",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_054",
+      "canonicalTerm": "大阪工事事務所・大阪電気工事事務所",
+      "meaning": "大阪工事事務所・大阪電気工事事務所",
+      "variants": [
+        {
+          "value": "大工・大電",
+          "matchType": "Exact"
+        },
+        {
+          "value": "だいこうだいでん",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ダイコウダイデン",
+          "matchType": "Exact"
+        },
+        {
+          "value": "大工大電",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ダイコウ・ダイデン",
+          "matchType": "Exact"
+        },
+        {
+          "value": "大阪工事事務所・大阪電気工事事務所",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_055",
+      "canonicalTerm": "地域まちづくり本部",
+      "meaning": "地域まちづくり本部",
+      "variants": [
+        {
+          "value": "地ま本",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ちまほん",
+          "matchType": "Exact"
+        },
+        {
+          "value": "チマホン",
+          "matchType": "Exact"
+        },
+        {
+          "value": "地域まちづくり本部",
+          "matchType": "Exact"
+        },
+        {
+          "value": "地域まちづくり",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_056",
+      "canonicalTerm": "直接部門",
+      "meaning": "現業（現場）部門。ちなみに、非現業部門は「間接部門」",
+      "variants": [
+        {
+          "value": "直接部門",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ちょくせつぶもん",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "チョクセツブモン",
+          "matchType": "Exact",
+          "note": "Addition"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_057",
+      "canonicalTerm": "超勤",
+      "meaning": "時間外労働、残業のこと。JR以外でも使われている企業もあるかもしれませんが、念のため",
+      "variants": [
+        {
+          "value": "超勤",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ちょうきん",
+          "matchType": "Exact"
+        },
+        {
+          "value": "チョウキン",
+          "matchType": "Exact"
+        },
+        {
+          "value": "超過勤務",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_059",
+      "canonicalTerm": "取り消し",
+      "meaning": "取り消し（とりけし）",
+      "variants": [
+        {
+          "value": "トケ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "とけ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "取り消し",
+          "matchType": "Exact"
+        },
+        {
+          "value": "取消",
+          "matchType": "Exact"
+        },
+        {
+          "value": "とりけし",
+          "matchType": "Exact"
+        },
+        {
+          "value": "トリケシ",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_060",
+      "canonicalTerm": "特別休日",
+      "meaning": "特別休日のこと。第1種休日制の社員において、土曜日や祝日、年末年始のこと",
+      "variants": [
+        {
+          "value": "特休",
+          "matchType": "Exact"
+        },
+        {
+          "value": "とっきゅう",
+          "matchType": "Exact"
+        },
+        {
+          "value": "トッキュウ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "特別休日",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_061",
+      "canonicalTerm": "北陸新幹線",
+      "meaning": "北陸新幹線",
+      "variants": [
+        {
+          "value": "北幹",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ほっかん",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ホッカン",
+          "matchType": "Exact"
+        },
+        {
+          "value": "北陸新幹線",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_068",
+      "canonicalTerm": "山陽新幹線統括本部",
+      "meaning": "山陽新幹線統括本部・（山陽新幹線もかな？）",
+      "variants": [
+        {
+          "value": "山幹",
+          "matchType": "Exact"
+        },
+        {
+          "value": "やまかん",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ヤマカン",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_069",
+      "canonicalTerm": "旅行申請",
+      "meaning": "帰省申請かと思いましたが、出張申請でした",
+      "variants": [
+        {
+          "value": "旅行申請",
+          "matchType": "Exact"
+        },
+        {
+          "value": "りょこうしんせい",
+          "matchType": "Exact"
+        },
+        {
+          "value": "リョコウシンセイ",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_072",
+      "canonicalTerm": "立案",
+      "meaning": "Wapsで起票すること",
+      "variants": [
+        {
+          "value": "立案",
+          "matchType": "Exact"
+        },
+        {
+          "value": "りつあん",
+          "matchType": "Exact"
+        },
+        {
+          "value": "リツアン",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_073",
+      "canonicalTerm": "老朽取り替え",
+      "meaning": "老朽化したので設備や車両を取り換えること。",
+      "variants": [
+        {
+          "value": "老取",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ろうとり",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ロウトリ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "老朽取替",
+          "matchType": "Exact"
+        },
+        {
+          "value": "老朽取替え",
+          "matchType": "Exact"
+        },
+        {
+          "value": "老朽取り替え",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_074",
+      "canonicalTerm": "ワークライフバランスサポートナビ",
+      "meaning": "ワークライフバランスサポートナビ。社員が使える制度をまとめたサイト",
+      "variants": [
+        {
+          "value": "ワラサポ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "わらさぽ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ワークライフバランスサポートナビ",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_075",
+      "canonicalTerm": "Waps",
+      "meaning": "社内稟議や事務連絡発信の際に使用するサイト",
+      "variants": [
+        {
+          "value": "Waps",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ワップス",
+          "matchType": "Exact"
+        },
+        {
+          "value": "わっぷす",
+          "matchType": "Exact"
+        },
+        {
+          "value": "WAPS",
+          "matchType": "Exact"
+        },
+        {
+          "value": "わぷす",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "ワプス",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "waps",
+          "matchType": "Exact",
+          "note": "Addition"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_076",
+      "canonicalTerm": "3H（久しぶり・初めて・変化）",
+      "meaning": "久しぶり、初めて、変化",
+      "variants": [
+        {
+          "value": "3H",
+          "matchType": "Exact"
+        },
+        {
+          "value": "スリーエイチ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "すりーえいち",
+          "matchType": "Exact"
+        },
+        {
+          "value": "さんえいち",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "サンエイチ",
+          "matchType": "Exact",
+          "note": "Addition"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_077",
+      "canonicalTerm": "3S（Speedy Support Service）",
+      "meaning": "[object Object]",
+      "variants": [
+        {
+          "value": "3S",
+          "matchType": "Exact"
+        },
+        {
+          "value": "スリーエス",
+          "matchType": "Exact"
+        },
+        {
+          "value": "すりーえす",
+          "matchType": "Exact"
+        },
+        {
+          "value": "さんえす",
+          "matchType": "Exact",
+          "note": "Addition"
+        },
+        {
+          "value": "Speedy Support Service",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_078",
+      "canonicalTerm": "BOX",
+      "meaning": "オンラインストレージ、社外の方とのファイル共有サービス",
+      "variants": [
+        {
+          "value": "BOX",
+          "matchType": "Exact"
+        },
+        {
+          "value": "Box",
+          "matchType": "Exact"
+        },
+        {
+          "value": "box",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ボックス",
+          "matchType": "Context Required",
+          "note": "「ブラックボックス」のように、「名詞＋ボックス」として使われる場合は、この単語を指さない可能性が高い。"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_079",
+      "canonicalTerm": "G-NET",
+      "meaning": "JR西日本グループポータルサイト",
+      "variants": [
+        {
+          "value": "G-NET",
+          "matchType": "Exact"
+        },
+        {
+          "value": "GNET",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ジーネット",
+          "matchType": "Exact"
+        },
+        {
+          "value": "じーねっと",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_082",
+      "canonicalTerm": "ネクストキャリアステップ研修",
+      "meaning": "ネクストキャリアステップ研修の略。間接部門への配置や昇職等キャリアステップの登竜門。\n→2025年に廃止予定。",
+      "variants": [
+        {
+          "value": "キャリアステップ研修",
+          "matchType": "Exact"
+        },
+        {
+          "value": "エヌエス",
+          "matchType": "Exact"
+        },
+        {
+          "value": "えぬえす",
+          "matchType": "Exact"
+        },
+        {
+          "value": "NS研修",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ネクストキャリアステップ研修",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ネクストキャリアステップ",
+          "matchType": "Exact"
+        }
+      ]
+    },
+    {
+      "termId": "TERM_087",
+      "canonicalTerm": "WISE-NETポータル",
+      "meaning": "WISE-NETポータル。当社のイントラネット",
+      "variants": [
+        {
+          "value": "WISE",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ワイズ",
+          "matchType": "Exact"
+        },
+        {
+          "value": "わいず",
+          "matchType": "Exact"
+        },
+        {
+          "value": "WISE-NET",
+          "matchType": "Exact"
+        },
+        {
+          "value": "WISE NET",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ワイズネット",
+          "matchType": "Exact"
+        },
+        {
+          "value": "WISE-NETポータル",
+          "matchType": "Exact"
+        },
+        {
+          "value": "ワイズネットポータル",
+          "matchType": "Exact"
+        }
+      ]
+    }
+  ]
+}

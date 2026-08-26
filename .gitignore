@@ -11,6 +11,9 @@ coverage/
 .env.*
 !.env.example
 
+# Local account database (contains password hashes)
+data/users.json
+
 # Editor and OS files
 .DS_Store
 .idea/
@@ -19,3 +22,4 @@ coverage/
 
 # TypeScript incremental build information
 *.tsbuildinfo
+.data/

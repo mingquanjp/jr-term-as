@@ -1,0 +1,1 @@
+export const PROCESSING_STAGE_DURATION_MS = 7_000

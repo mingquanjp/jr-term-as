@@ -8,7 +8,11 @@
     "node": ">=24 <26"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently --kill-others-on-fail --names web,api \"pnpm dev:web\" \"pnpm dev:server\"",
+    "dev:web": "vite",
+    "dev:server": "tsx watch server/index.ts",
+    "dictionary:build": "tsx scripts/build-term-dictionary.ts",
+    "auth:seed-admin": "tsx scripts/seed-admin.ts",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "lint": "eslint .",
@@ -16,9 +20,14 @@
     "format:check": "prettier . --check",
     "test": "vitest run",
     "test:watch": "vitest",
-    "check": "pnpm lint && pnpm format:check && pnpm test && pnpm build"
+    "check": "pnpm dictionary:build && pnpm lint && pnpm format:check && pnpm test && pnpm build"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "exceljs": "^4.4.0",
+    "express": "^5.2.1",
+    "mammoth": "^1.12.1",
+    "multer": "^2.2.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
@@ -26,10 +35,15 @@
     "@eslint/js": "^9.36.0",
     "@testing-library/jest-dom": "^6.8.0",
     "@testing-library/react": "^16.3.0",
+    "@types/express": "^5.0.6",
+    "@types/multer": "^2.2.0",
     "@types/node": "^24.6.0",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
+    "@types/supertest": "^7.2.1",
     "@vitejs/plugin-react": "^5.0.4",
+    "concurrently": "^10.0.5",
+    "docx": "^9.7.1",
     "eslint": "^9.36.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react-hooks": "^6.1.1",
@@ -37,6 +51,8 @@
     "globals": "^16.4.0",
     "jsdom": "^27.0.0",
     "prettier": "^3.6.2",
+    "supertest": "^7.2.2",
+    "tsx": "^4.23.12",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.45.0",
     "vite": "^7.1.7",
