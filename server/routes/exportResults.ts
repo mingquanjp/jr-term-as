@@ -58,7 +58,7 @@ exportResultsRouter.post('/', requireAuth, async (request, response, next) => {
       views: [{ state: 'frozen', ySplit: 3 }],
     })
 
-    sheet.mergeCells(includesTranscriptColumn ? 'A1:G1' : 'A1:F1')
+    sheet.mergeCells(includesTranscriptColumn ? 'A1:F1' : 'A1:E1')
     sheet.getCell('A1').value = 'JR Term Assistant 解析結果'
     sheet.getCell('A1').font = { bold: true, size: 14, color: { argb: 'FFFFFFFF' } }
     sheet.getCell('A1').fill = {
@@ -77,8 +77,7 @@ exportResultsRouter.post('/', requireAuth, async (request, response, next) => {
         ? [{ header: 'トランスクリプト名', key: 'transcriptName', width: 34 }]
         : []),
       { header: '正式名称', key: 'canonicalTerm', width: 30 },
-      { header: '分類', key: 'classification', width: 18 },
-      { header: '意味の推測', key: 'meaning', width: 38 },
+      { header: '意味の推測', key: 'meaningInference', width: 28 },
       { header: '出現した発話', key: 'contextSentence', width: 64 },
       { header: '検出回数', key: 'occurrenceCount', width: 12 },
     ]
@@ -87,7 +86,6 @@ exportResultsRouter.post('/', requireAuth, async (request, response, next) => {
       '検出された社内用語',
       ...(includesTranscriptColumn ? ['トランスクリプト名'] : []),
       '正式名称',
-      '分類',
       '意味の推測',
       '出現した発話',
       '検出回数',
@@ -105,8 +103,7 @@ exportResultsRouter.post('/', requireAuth, async (request, response, next) => {
         displayTerm: result.displayTerm,
         transcriptName: result.transcriptName,
         canonicalTerm: result.canonicalTerm,
-        classification: result.classification ?? '—',
-        meaning: result.meaning,
+        meaningInference: result.classification ?? '—',
         contextSentence: result.contextSentence,
         occurrenceCount: result.occurrenceCount,
       })
