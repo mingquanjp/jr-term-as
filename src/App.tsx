@@ -1,6 +1,9 @@
 import {
   ChangeEvent,
+  type CSSProperties,
   FormEvent,
+  type KeyboardEvent,
+  type PointerEvent as ReactPointerEvent,
   type ReactNode,
   useEffect,
   useRef,
@@ -635,6 +638,46 @@ function ResultsPage({ analysis, analyzedAt, user, onLogout }: ResultsPageProps)
   const resultCount = analysis?.results.length ?? 0
   const showTranscriptColumn = (analysis?.files.length ?? 0) > 1
   const [downloadError, setDownloadError] = useState('')
+  const [resultsRailWidth, setResultsRailWidth] = useState(340)
+  const resultsSurfaceRef = useRef<HTMLElement | null>(null)
+  const resizeStart = useRef<{ clientX: number; railWidth: number } | null>(null)
+
+  function clampRailWidth(width: number): number {
+    const surfaceWidth =
+      resultsSurfaceRef.current?.getBoundingClientRect().width ?? 1280
+    const availableMaximum = surfaceWidth > 0 ? surfaceWidth - 700 : 520
+    const maximum = Math.max(300, Math.min(520, availableMaximum))
+    return Math.min(Math.max(width, 300), maximum)
+  }
+
+  function handleResizeStart(event: ReactPointerEvent<HTMLDivElement>) {
+    resizeStart.current = { clientX: event.clientX, railWidth: resultsRailWidth }
+    event.currentTarget.setPointerCapture(event.pointerId)
+  }
+
+  function handleResizeMove(event: ReactPointerEvent<HTMLDivElement>) {
+    if (!resizeStart.current) return
+    const delta = event.clientX - resizeStart.current.clientX
+    setResultsRailWidth(clampRailWidth(resizeStart.current.railWidth - delta))
+  }
+
+  function handleResizeEnd(event: ReactPointerEvent<HTMLDivElement>) {
+    resizeStart.current = null
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId)
+    }
+  }
+
+  function handleResizeKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return
+    event.preventDefault()
+    if (event.key === 'Home') setResultsRailWidth(300)
+    else if (event.key === 'End') setResultsRailWidth(clampRailWidth(520))
+    else {
+      const direction = event.key === 'ArrowLeft' ? 24 : -24
+      setResultsRailWidth((width) => clampRailWidth(width + direction))
+    }
+  }
 
   async function handleDownload() {
     if (!analysis) return
@@ -663,7 +706,16 @@ function ResultsPage({ analysis, analyzedAt, user, onLogout }: ResultsPageProps)
       <GlobalHeader user={user} onLogout={onLogout} />
 
       <div className={styles.resultsWorkspace}>
-        <section className={styles.resultsSurface} aria-labelledby="results-title">
+        <section
+          ref={resultsSurfaceRef}
+          className={styles.resultsSurface}
+          style={
+            {
+              '--results-rail-width': `${resultsRailWidth}px`,
+            } as CSSProperties
+          }
+          aria-labelledby="results-title"
+        >
           <div className={styles.resultsMain}>
             <h1 id="results-title">解析結果</h1>
             <p className={styles.resultsMeta}>
@@ -769,6 +821,25 @@ function ResultsPage({ analysis, analyzedAt, user, onLogout }: ResultsPageProps)
             <p className={styles.resultsNote}>
               社内用語辞書と発話の前後文脈をもとに、会議内での意味を推測しています。
             </p>
+          </div>
+
+          <div
+            className={styles.resultsResizeHandle}
+            role="separator"
+            aria-label="結果テーブルとガイドの幅を調整"
+            aria-orientation="vertical"
+            aria-valuemin={300}
+            aria-valuemax={520}
+            aria-valuenow={Math.round(resultsRailWidth)}
+            tabIndex={0}
+            onDoubleClick={() => setResultsRailWidth(340)}
+            onKeyDown={handleResizeKeyDown}
+            onPointerDown={handleResizeStart}
+            onPointerMove={handleResizeMove}
+            onPointerUp={handleResizeEnd}
+            onPointerCancel={handleResizeEnd}
+          >
+            <span aria-hidden="true" />
           </div>
 
           <span className={styles.resultsStatus}>

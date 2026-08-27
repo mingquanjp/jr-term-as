@@ -185,6 +185,14 @@ describe('JR Term Assistant pages', () => {
     expect(
       screen.getByRole('button', { name: 'Excelをダウンロード' }),
     ).toBeInTheDocument()
+    const resizeHandle = screen.getByRole('separator', {
+      name: '結果テーブルとガイドの幅を調整',
+    })
+    expect(resizeHandle).toHaveAttribute('aria-valuenow', '340')
+    fireEvent.keyDown(resizeHandle, { key: 'ArrowLeft' })
+    expect(resizeHandle).toHaveAttribute('aria-valuenow', '364')
+    fireEvent.keyDown(resizeHandle, { key: 'Home' })
+    expect(resizeHandle).toHaveAttribute('aria-valuenow', '300')
     expect(screen.queryByText('Pattern / Results · 1440 × 900')).toBeNull()
   })
 
