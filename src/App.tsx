@@ -34,6 +34,7 @@ import {
   login,
   logout,
 } from './api/client'
+import { LOGIN_LOADING_DURATION_MS, OPENING_SPLASH_DURATION_MS } from './config/loading'
 import { PROCESSING_STAGE_DURATION_MS } from './config/processing'
 import styles from './App.module.css'
 import type {
@@ -109,7 +110,15 @@ function ShinkansenLogo() {
 
 function OpeningSplash() {
   return (
-    <div className={styles.openingSplash} data-testid="opening-splash">
+    <div
+      className={styles.openingSplash}
+      data-testid="opening-splash"
+      style={
+        {
+          '--opening-splash-duration': `${OPENING_SPLASH_DURATION_MS}ms`,
+        } as CSSProperties
+      }
+    >
       <div className={styles.splashPanelTop} />
       <div className={styles.splashPanelBottom} />
       <div className={styles.splashIdentity}>
@@ -462,7 +471,15 @@ function LoginPage({ onLogin }: { onLogin: (user: AuthUser) => void }) {
 
 function LoginLoadingPage() {
   return (
-    <main className={styles.loginLoadingPage} data-testid="login-loading-page">
+    <main
+      className={styles.loginLoadingPage}
+      data-testid="login-loading-page"
+      style={
+        {
+          '--login-loading-duration': `${LOGIN_LOADING_DURATION_MS}ms`,
+        } as CSSProperties
+      }
+    >
       <div className={styles.loadingGlow} aria-hidden="true" />
       <section
         className={styles.loginLoadingContent}
@@ -1030,9 +1047,6 @@ function ResultsPage({ analysis, analyzedAt, user, onLogout }: ResultsPageProps)
                         <th className={styles.resultsContextColumn} scope="col">
                           出現した発話
                         </th>
-                        <th className={styles.resultsClassificationColumn} scope="col">
-                          分類
-                        </th>
                         <th scope="col">意味の推測</th>
                       </tr>
                     </thead>
@@ -1058,11 +1072,8 @@ function ResultsPage({ analysis, analyzedAt, user, onLogout }: ResultsPageProps)
                               term={item.displayTerm}
                             />
                           </td>
-                          <td className={styles.resultsClassificationColumn}>
-                            {item.classification ?? '—'}
-                          </td>
                           <td>
-                            <span>{item.meaning}</span>
+                            <span>{item.classification ?? '—'}</span>
                             <small>{item.occurrenceCount}回検出</small>
                           </td>
                         </tr>
@@ -1163,7 +1174,10 @@ function App() {
 
   useEffect(() => {
     if (!showOpeningSplash) return
-    const timer = window.setTimeout(() => setShowOpeningSplash(false), 3800)
+    const timer = window.setTimeout(
+      () => setShowOpeningSplash(false),
+      OPENING_SPLASH_DURATION_MS,
+    )
     return () => window.clearTimeout(timer)
   }, [showOpeningSplash])
 
@@ -1196,7 +1210,8 @@ function App() {
   function handleLogin(userAccount: AuthUser) {
     setUser(userAccount)
     setLoginLoading(true)
-    const loadingDuration = import.meta.env.MODE === 'test' ? 50 : 5000
+    const loadingDuration =
+      import.meta.env.MODE === 'test' ? 50 : LOGIN_LOADING_DURATION_MS
     loginLoadingTimer.current = window.setTimeout(() => {
       setLoginLoading(false)
       loginLoadingTimer.current = null
