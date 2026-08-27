@@ -77,6 +77,16 @@ describe('JR Term Assistant pages', () => {
     expect(await screen.findByRole('rowheader', { name: 'イノ本' })).toBeInTheDocument()
   })
 
+  it('keeps landing navigation on the landing page', async () => {
+    render(<App />)
+
+    fireEvent.click(screen.getAllByRole('link', { name: '機能' })[0])
+
+    await waitFor(() => expect(window.location.hash).toBe('#features'))
+    expect(screen.getByTestId('landing-page')).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'ログイン' })).not.toBeInTheDocument()
+  })
+
   it('logs in through the backend API', async () => {
     window.location.hash = '#login'
     vi.mocked(fetch).mockImplementation((input) => {
@@ -106,6 +116,11 @@ describe('JR Term Assistant pages', () => {
       target: { value: 'password' },
     })
     fireEvent.click(screen.getByRole('button', { name: 'ログイン' }))
+
+    expect(await screen.findByTestId('login-loading-page')).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: 'ワークスペースへ移動しています' }),
+    ).toBeInTheDocument()
 
     expect(
       await screen.findByRole('heading', { name: 'トランスクリプトを解析' }),

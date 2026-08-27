@@ -48,6 +48,8 @@ const steps = [
   { number: '03', title: '理解', detail: '意味・正式名称を確認' },
 ]
 
+const landingRoutes = ['', '#landing', '#features', '#workflow', '#example']
+
 type BrandMarkProps = {
   href: string
 }
@@ -55,49 +57,225 @@ type BrandMarkProps = {
 function BrandMark({ href }: BrandMarkProps) {
   return (
     <a className={styles.brand} href={href} aria-label="JR Term Assistant ホーム">
-      <span className={styles.monogram} aria-hidden="true">
-        JR
+      <svg
+        className={styles.brandTrainLogo}
+        viewBox="0 0 360 132"
+        role="img"
+        aria-label="Shinkansen"
+      >
+        <path
+          d="M15 91c0-18 17-29 46-40l58-20 29-20c7-5 14-7 23-7h174"
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="square"
+          strokeLinejoin="round"
+          strokeWidth="9"
+        />
+        <path d="M116 31h65c-8 10-17 15-31 15H87" fill="currentColor" />
+        <path
+          d="M15 91c0 11 8 18 21 18h309M15 126h330M166 77h179"
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="square"
+          strokeWidth="9"
+        />
+        <g fill="currentColor">
+          <rect x="213" y="47" width="18" height="18" rx="3" />
+          <rect x="247" y="47" width="18" height="18" rx="3" />
+          <rect x="281" y="47" width="18" height="18" rx="3" />
+          <rect x="315" y="47" width="18" height="18" rx="3" />
+        </g>
+      </svg>
+      <span className={styles.brandWordmark} aria-hidden="true">
+        <strong>JR TERM</strong>
+        <small>ASSISTANT</small>
       </span>
-      <span>JR Term Assistant</span>
     </a>
+  )
+}
+
+function ShinkansenLogo() {
+  return (
+    <span className={styles.shinkansenLogo} aria-hidden="true">
+      <span className={styles.logoTrainBody}>
+        <span className={styles.logoTrainWindow} />
+        <span className={styles.logoTrainStripe} />
+      </span>
+      <span className={styles.logoTrainNose} />
+      <span className={styles.logoRail} />
+    </span>
+  )
+}
+
+function OpeningSplash() {
+  return (
+    <div className={styles.openingSplash} data-testid="opening-splash">
+      <div className={styles.splashPanelTop} />
+      <div className={styles.splashPanelBottom} />
+      <div className={styles.splashIdentity}>
+        <ShinkansenLogo />
+        <strong>JR Term Assistant</strong>
+        <span>言葉をつなぎ、理解を加速する</span>
+      </div>
+    </div>
   )
 }
 
 function LandingPage({ examples }: { examples: DictionaryExample[] }) {
   return (
     <main className={styles.landingPage} data-testid="landing-page">
-      <section className={styles.landingSurface} aria-labelledby="landing-title">
-        <header className={styles.landingHeader}>
+      <header className={styles.landingHeader}>
+        <div className={styles.landingHeaderInner}>
           <BrandMark href="#landing" />
-          <a className={styles.secondaryButton} href="#login">
+          <nav className={styles.landingNav} aria-label="ランディングナビゲーション">
+            <a href="#features">機能</a>
+            <a href="#workflow">使い方</a>
+            <a href="#example">出力例</a>
+          </nav>
+          <a className={styles.headerLoginButton} href="#login">
             ログイン
-          </a>
-        </header>
-
-        <div className={styles.hero}>
-          <h1 id="landing-title">JR社内用語を、会議トランスクリプトから見つける</h1>
-          <p>登録済みの社内用語辞書を使って、生成AIが理解しやすい情報を補完します。</p>
-          <a className={styles.primaryButton} href="#login">
-            デモを始める
+            <span aria-hidden="true">→</span>
           </a>
         </div>
+      </header>
 
-        <img
-          className={styles.mascot}
-          src={mascotLanding}
-          alt="JR Term Assistantの案内キャラクター"
-        />
+      <section className={styles.landingHero} aria-labelledby="landing-title">
+        <div className={styles.heroCopy}>
+          <p className={styles.heroEyebrow}>
+            <span /> JR INTERNAL KNOWLEDGE PLATFORM
+          </p>
+          <h1 id="landing-title">
+            JR社内用語を、
+            <em>会議トランスクリプト</em>から見つける
+          </h1>
+          <p className={styles.heroDescription}>
+            登録済みの社内用語辞書と生成AIを活用し、会議の中にある略語や専門用語を、
+            誰にでもわかる知識へ変換します。
+          </p>
+          <div className={styles.heroActions}>
+            <a className={styles.primaryButton} href="#login">
+              解析を始める <span aria-hidden="true">→</span>
+            </a>
+            <a className={styles.heroTextLink} href="#workflow">
+              使い方を見る <span aria-hidden="true">↓</span>
+            </a>
+          </div>
+          <div className={styles.heroTrust}>
+            <span>TXT / DOCX 対応</span>
+            <span>社内辞書連携</span>
+            <span>安全な解析環境</span>
+          </div>
+        </div>
 
+        <div className={styles.heroVisual} aria-label="用語解析のイメージ">
+          <div className={styles.heroVisualAccent} />
+          <div className={styles.transcriptCard}>
+            <div className={styles.mockWindowBar}>
+              <span />
+              <span />
+              <span />
+              <small>meeting_transcript.txt</small>
+            </div>
+            <p>
+              次回の定例では、<mark>イノ本</mark>との連携について確認します。
+            </p>
+            <div className={styles.detectedTermCard}>
+              <span>DETECTED TERM</span>
+              <strong>イノ本</strong>
+              <p>イノベーション本部</p>
+              <small>組織名称 · 辞書登録済み</small>
+            </div>
+          </div>
+          <img src={mascotLanding} alt="JR Term Assistantの案内キャラクター" />
+          <div className={styles.heroVisualBadge}>
+            <strong>AI</strong>
+            <span>文脈から意味を補完</span>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.valueStrip} aria-label="サービスの特徴">
+        <div>
+          <strong>01</strong>
+          <span>会議データをアップロード</span>
+        </div>
+        <div>
+          <strong>02</strong>
+          <span>社内用語を自動検出</span>
+        </div>
+        <div>
+          <strong>03</strong>
+          <span>正式名称と意味を整理</span>
+        </div>
+      </section>
+
+      <section className={styles.featuresSection} id="features">
+        <div className={styles.sectionHeading}>
+          <p>WHY JR TERM ASSISTANT</p>
+          <h2>会議の理解を、もっと速く・正確に</h2>
+          <span>人によって異なる社内用語の理解を、ひとつの共通知識に整えます。</span>
+        </div>
+        <div className={styles.featureGrid}>
+          <article>
+            <span className={styles.featureIcon}>01</span>
+            <h3>自動用語検出</h3>
+            <p>
+              トランスクリプトを読み込み、辞書に登録された略語・専門用語を素早く特定します。
+            </p>
+          </article>
+          <article>
+            <span className={styles.featureIcon}>02</span>
+            <h3>文脈を含めて整理</h3>
+            <p>
+              用語だけでなく、実際に使われた発話文も並べて表示。背景まで確認できます。
+            </p>
+          </article>
+          <article>
+            <span className={styles.featureIcon}>03</span>
+            <h3>共有しやすい結果</h3>
+            <p>
+              解析結果を一覧で確認し、Excelとして出力。チームのナレッジ共有に活用できます。
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section className={styles.workflowSection} id="workflow">
+        <div className={styles.workflowIntro}>
+          <p>HOW IT WORKS</p>
+          <h2>
+            わずか3ステップで、
+            <br />
+            会議の言葉がわかる
+          </h2>
+          <span>
+            複雑な設定は必要ありません。ファイルを選ぶだけで解析を開始できます。
+          </span>
+          <a href="#login">
+            今すぐ試してみる <span aria-hidden="true">→</span>
+          </a>
+        </div>
         <ol className={styles.steps} aria-label="利用の流れ">
           {steps.map((step) => (
             <li key={step.number}>
               <span>{step.number}</span>
-              <strong>{step.title}</strong>
-              <small>{step.detail}</small>
+              <div>
+                <strong>{step.title}</strong>
+                <small>{step.detail}</small>
+              </div>
             </li>
           ))}
         </ol>
+      </section>
 
+      <section className={styles.exampleSection} id="example">
+        <div className={styles.sectionHeading}>
+          <p>OUTPUT EXAMPLE</p>
+          <h2>検出結果を、ひと目で確認</h2>
+          <span>
+            社内辞書に登録された正式名称と意味を、発話の文脈と一緒に表示します。
+          </span>
+        </div>
         <div className={styles.exampleArea}>
           <div className={styles.exampleTableWrapper}>
             <table className={styles.exampleTable}>
@@ -105,6 +283,7 @@ function LandingPage({ examples }: { examples: DictionaryExample[] }) {
                 <tr>
                   <th scope="col">検出された社内用語</th>
                   <th scope="col">意味</th>
+                  <th scope="col">ステータス</th>
                 </tr>
               </thead>
               <tbody>
@@ -112,14 +291,44 @@ function LandingPage({ examples }: { examples: DictionaryExample[] }) {
                   <tr key={item.term}>
                     <th scope="row">{item.term}</th>
                     <td>{item.meaning}</td>
+                    <td>
+                      <span className={styles.tableStatus}>辞書登録済み</span>
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <p className={styles.trustNote}>辞書登録済みの説明を表示</p>
         </div>
       </section>
+
+      <section className={styles.landingCta}>
+        <ShinkansenLogo />
+        <div>
+          <p>READY TO DEPART?</p>
+          <h2>会議の「わからない」を、次の駅へ。</h2>
+        </div>
+        <a href="#login">
+          解析を始める <span aria-hidden="true">→</span>
+        </a>
+      </section>
+
+      <footer className={styles.landingFooter}>
+        <div className={styles.footerMain}>
+          <BrandMark href="#landing" />
+          <p>社内用語の理解を支え、組織のコミュニケーションをよりスムーズに。</p>
+          <nav aria-label="フッターナビゲーション">
+            <a href="#features">機能</a>
+            <a href="#workflow">使い方</a>
+            <a href="#example">出力例</a>
+            <a href="#login">ログイン</a>
+          </nav>
+        </div>
+        <div className={styles.footerBottom}>
+          <span>JR Term Assistant</span>
+          <small>© 2026 JR WEST. Internal use only.</small>
+        </div>
+      </footer>
     </main>
   )
 }
@@ -251,6 +460,63 @@ function LoginPage({ onLogin }: { onLogin: (user: AuthUser) => void }) {
   )
 }
 
+function LoginLoadingPage() {
+  return (
+    <main className={styles.loginLoadingPage} data-testid="login-loading-page">
+      <div className={styles.loadingGlow} aria-hidden="true" />
+      <section
+        className={styles.loginLoadingContent}
+        aria-labelledby="login-loading-title"
+        aria-describedby="login-loading-description"
+      >
+        <div className={styles.loadingBrand} aria-label="JR Term Assistant">
+          <span className={styles.loadingMonogram} aria-hidden="true">
+            JR
+          </span>
+          <span>JR Term Assistant</span>
+        </div>
+
+        <div className={styles.trainScene} aria-hidden="true">
+          <span className={`${styles.speedLine} ${styles.speedLineOne}`} />
+          <span className={`${styles.speedLine} ${styles.speedLineTwo}`} />
+          <span className={`${styles.speedLine} ${styles.speedLineThree}`} />
+          <div className={styles.shinkansen}>
+            <div className={styles.trainTail} />
+            <div className={styles.trainNose} />
+            <div className={styles.trainBody}>
+              <span className={styles.trainWindow} />
+              <span className={styles.trainWindow} />
+              <span className={styles.trainWindow} />
+              <span className={styles.trainDoor} />
+              <span className={styles.trainRearDoor} />
+              <span className={styles.trainStripe} />
+            </div>
+          </div>
+          <div className={styles.railway}>
+            <span />
+          </div>
+        </div>
+
+        <div className={styles.loadingCopy} aria-live="polite">
+          <p className={styles.loadingEyebrow}>WELCOME ABOARD</p>
+          <h1 id="login-loading-title">ワークスペースへ移動しています</h1>
+          <p id="login-loading-description">
+            安全に接続しています。まもなくご利用いただけます。
+          </p>
+        </div>
+
+        <div className={styles.loginProgress} aria-hidden="true">
+          <span />
+        </div>
+        <p className={styles.loadingStatus}>
+          <span aria-hidden="true" />
+          セッションを準備中
+        </p>
+      </section>
+    </main>
+  )
+}
+
 const uploadGuidance = [
   'TXT / DOCX に対応',
   '日本語テキストを推奨',
@@ -260,9 +526,7 @@ const uploadGuidance = [
 function GlobalHeader({ user, onLogout }: { user: AuthUser; onLogout: () => void }) {
   return (
     <header className={styles.globalHeader}>
-      <a className={styles.productName} href="#landing">
-        JR用語ナビ
-      </a>
+      <BrandMark href="#landing" />
       <span className={styles.headerDivider} aria-hidden="true" />
       <nav className={styles.globalNav} aria-label="メインナビゲーション">
         <a href="#landing">ホーム</a>
@@ -874,9 +1138,13 @@ function ResultsPage({ analysis, analyzedAt, user, onLogout }: ResultsPageProps)
 }
 
 function App() {
+  const [showOpeningSplash, setShowOpeningSplash] = useState(
+    import.meta.env.MODE !== 'test',
+  )
   const [route, setRoute] = useState(window.location.hash)
   const [user, setUser] = useState<AuthUser | null>(null)
   const [authLoading, setAuthLoading] = useState(true)
+  const [loginLoading, setLoginLoading] = useState(false)
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const [analysis, setAnalysis] = useState<AnalyzeTranscriptResponse | null>(null)
   const [analyzedAt, setAnalyzedAt] = useState<Date | null>(null)
@@ -885,12 +1153,28 @@ function App() {
   const [dictionaryExamples, setDictionaryExamples] = useState<DictionaryExample[]>([])
   const analysisAbortController = useRef<AbortController | null>(null)
   const analysisRunId = useRef(0)
+  const loginLoadingTimer = useRef<number | null>(null)
 
   useEffect(() => {
     const handleHashChange = () => setRoute(window.location.hash)
     window.addEventListener('hashchange', handleHashChange)
     return () => window.removeEventListener('hashchange', handleHashChange)
   }, [])
+
+  useEffect(() => {
+    if (!showOpeningSplash) return
+    const timer = window.setTimeout(() => setShowOpeningSplash(false), 3800)
+    return () => window.clearTimeout(timer)
+  }, [showOpeningSplash])
+
+  useEffect(
+    () => () => {
+      if (loginLoadingTimer.current !== null) {
+        window.clearTimeout(loginLoadingTimer.current)
+      }
+    },
+    [],
+  )
 
   useEffect(() => {
     getDictionaryExamples()
@@ -911,13 +1195,24 @@ function App() {
 
   function handleLogin(userAccount: AuthUser) {
     setUser(userAccount)
-    window.location.hash = '#upload'
+    setLoginLoading(true)
+    const loadingDuration = import.meta.env.MODE === 'test' ? 50 : 5000
+    loginLoadingTimer.current = window.setTimeout(() => {
+      setLoginLoading(false)
+      loginLoadingTimer.current = null
+      window.location.hash = '#upload'
+    }, loadingDuration)
   }
 
   async function handleLogout() {
     analysisRunId.current += 1
     analysisAbortController.current?.abort()
     analysisAbortController.current = null
+    if (loginLoadingTimer.current !== null) {
+      window.clearTimeout(loginLoadingTimer.current)
+      loginLoadingTimer.current = null
+    }
+    setLoginLoading(false)
     await logout().catch(() => undefined)
     setUser(null)
     setSelectedFiles([])
@@ -979,21 +1274,24 @@ function App() {
     }
   }
 
-  if (route === '#login') return <LoginPage onLogin={handleLogin} />
-  if (!route || route === '#landing')
-    return <LandingPage examples={dictionaryExamples} />
+  let currentPage: ReactNode
 
-  if (authLoading) {
-    return (
+  if (loginLoading) {
+    currentPage = <LoginLoadingPage />
+  } else if (route === '#login') {
+    currentPage = <LoginPage onLogin={handleLogin} />
+  } else if (landingRoutes.includes(route)) {
+    currentPage = <LandingPage examples={dictionaryExamples} />
+  } else if (authLoading) {
+    currentPage = (
       <main className={styles.sessionLoading} aria-live="polite">
         アカウントを確認しています…
       </main>
     )
-  }
-
-  if (!user) return <LoginPage onLogin={handleLogin} />
-  if (route === '#upload') {
-    return (
+  } else if (!user) {
+    currentPage = <LoginPage onLogin={handleLogin} />
+  } else if (route === '#upload') {
+    currentPage = (
       <UploadPage
         selectedFiles={selectedFiles}
         onFilesChange={setSelectedFiles}
@@ -1002,9 +1300,8 @@ function App() {
         onLogout={handleLogout}
       />
     )
-  }
-  if (route === '#processing') {
-    return (
+  } else if (route === '#processing') {
+    currentPage = (
       <ProcessingPage
         files={selectedFiles}
         stage={processingStage}
@@ -1021,9 +1318,8 @@ function App() {
         onLogout={handleLogout}
       />
     )
-  }
-  if (route === '#results') {
-    return (
+  } else if (route === '#results') {
+    currentPage = (
       <ResultsPage
         analysis={analysis}
         analyzedAt={analyzedAt}
@@ -1031,8 +1327,16 @@ function App() {
         onLogout={handleLogout}
       />
     )
+  } else {
+    currentPage = <LandingPage examples={dictionaryExamples} />
   }
-  return <LandingPage examples={dictionaryExamples} />
+
+  return (
+    <>
+      {currentPage}
+      {showOpeningSplash && <OpeningSplash />}
+    </>
+  )
 }
 
 export default App
