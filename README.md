@@ -64,6 +64,11 @@ QWEN_CONTEXT_GATE_MODE=risky
 validates every match and is slower; use it only after testing the target
 transcript.
 
+### Presentation materials
+
+- Concise Vietnamese speaking script: `presentation/Qwen_Context_Gate_Script_vi.md`
+- Browser-ready overview page: `http://127.0.0.1:5174/qwen-context-overview.html`
+
 ### Qwen context evaluation
 
 `test/fixtures/qwen-context-evaluation.json` contains anonymized, synthetic

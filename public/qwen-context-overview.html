@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>JR Term Assistant — Qwen Context Gate</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #17212b;
+        --muted: #52606d;
+        --line: #d9e2ec;
+        --paper: #f7f9fb;
+        --card: #fff;
+        --accent: #0f6b78;
+        --accent-soft: #e6f4f5;
+        --ok: #16794c;
+        --ok-soft: #e8f6ee;
+        --warn: #a15c00;
+        --warn-soft: #fff3df;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--paper);
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Yu Gothic', 'Segoe UI',
+          sans-serif;
+        line-height: 1.7;
+      }
+      a {
+        color: var(--accent);
+      }
+      .page {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 32px 24px 72px;
+      }
+      .hero {
+        display: grid;
+        grid-template-columns: 1.4fr 0.8fr;
+        gap: 32px;
+        align-items: end;
+        padding: 46px;
+        color: #fff;
+        background: #123642;
+        border-radius: 22px;
+      }
+      .eyebrow {
+        margin: 0 0 12px;
+        color: #a5e3e7;
+        font-weight: 700;
+        font-size: 0.82rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        line-height: 1.22;
+        text-wrap: balance;
+      }
+      h1 {
+        font-size: clamp(2rem, 5vw, 4rem);
+      }
+      h2 {
+        font-size: clamp(1.45rem, 2.6vw, 2.2rem);
+        margin-bottom: 14px;
+      }
+      h3 {
+        font-size: 1.15rem;
+        margin-bottom: 8px;
+      }
+      p {
+        max-width: 74ch;
+        text-wrap: pretty;
+      }
+      .hero p {
+        color: #d5e7ea;
+        font-size: 1.1rem;
+        margin: 18px 0 0;
+      }
+      .hero-note {
+        padding: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 14px;
+        color: #d5e7ea;
+      }
+      .hero-note strong {
+        display: block;
+        color: #fff;
+        font-size: 2rem;
+        line-height: 1.1;
+      }
+      section {
+        margin-top: 42px;
+      }
+      .section-label {
+        margin: 0 0 8px;
+        color: var(--accent);
+        font-weight: 800;
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      .card {
+        padding: 22px;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        box-shadow: 0 3px 12px rgba(23, 33, 43, 0.05);
+      }
+      .card p {
+        margin: 8px 0 0;
+        color: var(--muted);
+      }
+      .before-after {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+      .panel {
+        padding: 24px;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+      }
+      .panel.before {
+        border-top: 5px solid #9aa5b1;
+      }
+      .panel.after {
+        border-top: 5px solid var(--accent);
+      }
+      .quote {
+        margin: 16px 0 0;
+        padding: 16px 18px;
+        background: #f1f4f7;
+        border-left: 4px solid var(--accent);
+        font-family: 'Hiragino Mincho ProN', serif;
+      }
+      .flow {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+        align-items: stretch;
+      }
+      .flow-step {
+        position: relative;
+        padding: 18px 14px;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        text-align: center;
+      }
+      .flow-step:not(:last-child)::after {
+        content: '→';
+        position: absolute;
+        right: -17px;
+        top: 50%;
+        color: var(--accent);
+        font-size: 1.5rem;
+        transform: translateY(-50%);
+      }
+      .number {
+        display: grid;
+        place-items: center;
+        width: 30px;
+        height: 30px;
+        margin: 0 auto 10px;
+        border-radius: 50%;
+        color: #fff;
+        background: var(--accent);
+        font-weight: 800;
+      }
+      .flow-step p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.93rem;
+      }
+      .example-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+      .example {
+        padding: 22px;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+      }
+      .example.accept {
+        border-left: 5px solid var(--ok);
+      }
+      .example.reject {
+        border-left: 5px solid var(--warn);
+      }
+      code {
+        padding: 2px 6px;
+        border-radius: 5px;
+        background: #eef2f5;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+      .jp {
+        display: block;
+        margin: 12px 0;
+        padding: 14px;
+        background: #f7f9fb;
+        border-radius: 8px;
+        font-size: 1.02rem;
+      }
+      .badge {
+        display: inline-block;
+        padding: 2px 9px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-weight: 800;
+      }
+      .badge.ok {
+        color: var(--ok);
+        background: var(--ok-soft);
+      }
+      .badge.warn {
+        color: var(--warn);
+        background: var(--warn-soft);
+      }
+      .badge.info {
+        color: var(--accent);
+        background: var(--accent-soft);
+      }
+      .decision-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      .decision {
+        padding: 20px;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+      }
+      .decision strong {
+        display: block;
+        margin: 6px 0;
+        font-size: 1.05rem;
+      }
+      .decision p {
+        margin: 0;
+        color: var(--muted);
+      }
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin: 20px 0;
+      }
+      .metric {
+        padding: 20px;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        text-align: center;
+      }
+      .metric strong {
+        display: block;
+        color: var(--accent);
+        font-size: 2.2rem;
+        line-height: 1.1;
+        font-variant-numeric: tabular-nums;
+      }
+      .metric span {
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+      th,
+      td {
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        color: #fff;
+        background: var(--accent);
+        font-size: 0.9rem;
+      }
+      tr:last-child td {
+        border-bottom: 0;
+      }
+      .small {
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      .callout {
+        padding: 20px 22px;
+        background: var(--accent-soft);
+        border: 1px solid #b9e0e3;
+        border-radius: 14px;
+      }
+      .callout strong {
+        color: var(--accent);
+      }
+      footer {
+        margin-top: 48px;
+        padding-top: 20px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+      .print-button {
+        margin-top: 16px;
+        padding: 10px 15px;
+        border: 0;
+        border-radius: 8px;
+        color: #fff;
+        background: var(--accent);
+        font: inherit;
+        cursor: pointer;
+      }
+      .print-button:focus-visible {
+        outline: 3px solid #f4c95d;
+        outline-offset: 3px;
+      }
+      @media (max-width: 820px) {
+        .hero,
+        .before-after,
+        .example-grid {
+          grid-template-columns: 1fr;
+        }
+        .card-grid,
+        .decision-grid,
+        .metrics {
+          grid-template-columns: 1fr;
+        }
+        .flow {
+          grid-template-columns: 1fr;
+        }
+        .flow-step:not(:last-child)::after {
+          content: '↓';
+          right: 50%;
+          top: auto;
+          bottom: -24px;
+          transform: translateX(50%);
+        }
+        .hero {
+          padding: 30px 24px;
+        }
+      }
+      @media print {
+        body {
+          background: #fff;
+        }
+        .page {
+          max-width: none;
+          padding: 0;
+        }
+        .hero {
+          color: #000;
+          background: #fff;
+          border: 2px solid #123642;
+        }
+        .hero p,
+        .hero-note {
+          color: #17212b;
+        }
+        .print-button {
+          display: none;
+        }
+        section {
+          break-inside: avoid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">JR Term Assistant · Qwen Context Gate</p>
+          <h1>社内用語を、文字一致から文脈理解へ</h1>
+          <p>
+            JR西日本の辞書を基準に、会議 transcript
+            の前後関係を確認し、実際に社内用語として使われた候補だけを表示します。
+          </p>
+          <button class="print-button" type="button" onclick="window.print()">
+            このページを印刷
+          </button>
+        </div>
+        <div class="hero-note">
+          <strong>14 cases</strong><span>文脈判定の内部試験</span><br /><br /><strong
+            >100%</strong
+          ><span>precision（試験データ上）</span>
+        </div>
+      </header>
+
+      <section>
+        <p class="section-label">01 · 課題</p>
+        <h2>文字が一致しても、意味が一致するとは限らない</h2>
+        <div class="before-after">
+          <article class="panel before">
+            <h3>これまで</h3>
+            <p>
+              システムは、登録された文字列が transcript
+              に出現したかを中心に判定していました。
+            </p>
+            <p>
+              明確な用語には有効ですが、短い略称や一般語と重なる表現では、別の意味の文章まで候補になる可能性があります。
+            </p>
+          </article>
+          <article class="panel after">
+            <h3>今回の変更</h3>
+            <p>
+              候補のうち、文脈が必要なものについて、Qwen
+              が辞書情報と前後の発話を確認します。
+            </p>
+            <p>
+              結果画面には、Qwen
+              が社内用語として使われていると判断した候補だけを表示します。
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <p class="section-label">02 · 具体例</p>
+        <h2>同じ文字列を、前後の発話で見分ける</h2>
+        <div class="example-grid">
+          <article class="example reject">
+            <span class="badge warn">表示しない · reject</span>
+            <h3><code>うや</code> の例</h3>
+            <p>
+              課題説明用の例です。辞書上の意味を
+              <code>運転休止</code> とした場合でも、次の発話は通常の言いよどみです。
+            </p>
+            <span class="jp">「えっと、どうやったかなあ。」</span>
+            <p class="small">
+              文字が似ていても、会議の話題が運転休止でなければ社内用語として表示しません。
+            </p>
+          </article>
+          <article class="example accept">
+            <span class="badge ok">表示する · accept</span>
+            <h3><code>UK</code> の例</h3>
+            <p>辞書上の意味は <code>輸送計画システム</code> です。</p>
+            <span class="jp"
+              >UKのリプレースに伴い、インターフェース改修の見積を確認します。</span
+            >
+            <p class="small">
+              リプレース、interface、運用データなどの手がかりがあり、システム名としての使用と判断できます。
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <p class="section-label">03 · 仕組み</p>
+        <h2>Qwen は意味を作るのではなく、使われ方を確認する</h2>
+        <div class="flow" aria-label="処理フロー">
+          <div class="flow-step">
+            <span class="number">1</span>
+            <p>Transcript をアップロード</p>
+          </div>
+          <div class="flow-step">
+            <span class="number">2</span>
+            <p>辞書から候補を検出</p>
+          </div>
+          <div class="flow-step">
+            <span class="number">3</span>
+            <p>前後の発話を取得</p>
+          </div>
+          <div class="flow-step">
+            <span class="number">4</span>
+            <p>Qwen が文脈を判定</p>
+          </div>
+          <div class="flow-step">
+            <span class="number">5</span>
+            <p>accept だけ表示</p>
+          </div>
+        </div>
+        <div class="callout" style="margin-top: 18px">
+          <strong>基準は JR の辞書です。</strong> Qwen
+          は新しい定義を発明したり、正式名称を書き換えたりしません。辞書の意味が今回の会話に合っているかを確認します。
+        </div>
+      </section>
+
+      <section>
+        <p class="section-label">04 · 判定</p>
+        <h2>結果画面には、利用者が確認しやすい結果だけを表示</h2>
+        <div class="decision-grid">
+          <article class="decision">
+            <span class="badge ok">accept</span><strong>社内用語として適合</strong>
+            <p>辞書の意味と前後の発話が明確に整合するため、結果画面に表示します。</p>
+          </article>
+          <article class="decision">
+            <span class="badge warn">reject</span
+            ><strong>一般的な意味・別の意味</strong>
+            <p>
+              文字列は一致していても、社内用語として使われていないため表示しません。
+            </p>
+          </article>
+          <article class="decision">
+            <span class="badge info">uncertain</span><strong>根拠が不足</strong>
+            <p>判断材料が足りないため、誤った確定を避けて表示しません。</p>
+          </article>
+        </div>
+        <p class="small">
+          このため、表示件数を増やすことよりも、表示された結果を安心して確認できることを優先しています。
+        </p>
+      </section>
+
+      <section>
+        <p class="section-label">05 · 表示の考え方</p>
+        <h2>「意味」から「意味の推測」へ</h2>
+        <div class="panel">
+          <p>
+            表示される意味の原典は、JR が提供・レビューした辞書です。一方、Qwen
+            はその意味が会議の中でどのように使われているかを文脈から確認します。
+          </p>
+          <p>
+            そのため、<code>意味の推測</code> は「AI が自由に作った意味」ではなく、「JR
+            の辞書と今回の会話から推測した、その場での意味」を表します。
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <p class="section-label">06 · 内部試験</p>
+        <h2>14ケースでの文脈判定テスト</h2>
+        <div class="metrics">
+          <div class="metric"><strong>100%</strong><span>precision</span></div>
+          <div class="metric"><strong>85.7%</strong><span>recall</span></div>
+          <div class="metric"><strong>92.9%</strong><span>accuracy</span></div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>項目</th>
+              <th>件数</th>
+              <th>意味</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>正しく表示</td>
+              <td>6</td>
+              <td>正しいケースを accept</td>
+            </tr>
+            <tr>
+              <td>誤って表示</td>
+              <td>0</td>
+              <td>誤ったケースを accept していない</td>
+            </tr>
+            <tr>
+              <td>正しいが未表示</td>
+              <td>1</td>
+              <td>今後改善する見落とし</td>
+            </tr>
+            <tr>
+              <td>正しく除外</td>
+              <td>7</td>
+              <td>誤ったケースを reject</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="small">
+          対象は
+          `人財開発室`、`UK`、`輸送計画`、`安全推進`、`一見一様`、`均等`、`ボックス`
+          の各2ケースです。合成・匿名化した社内検証用データであり、JR
+          レビュー前の暫定結果です。
+        </p>
+        <details style="margin-top: 16px">
+          <summary style="cursor: pointer; color: var(--accent); font-weight: 800">
+            14ケースの内容を表示
+          </summary>
+          <div style="overflow-x: auto; margin-top: 12px">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>候補</th>
+                  <th>現在の発話</th>
+                  <th>期待結果</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>人財開発室</td>
+                  <td>人財開発室にAI研修の実施計画を確認してください。</td>
+                  <td><span class="badge ok">表示</span></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>人財開発室</td>
+                  <td>先方の人財開発室が研修資料を作成しています。</td>
+                  <td><span class="badge warn">除外</span></td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>UK</td>
+                  <td>
+                    UKのリプレースに伴い、インターフェース改修の見積を確認します。
+                  </td>
+                  <td><span class="badge ok">表示</span></td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>UK</td>
+                  <td>UK市場向けの販売資料を確認します。</td>
+                  <td><span class="badge warn">除外</span></td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>輸送計画</td>
+                  <td>輸送計画のマスタを更新して現場へ配信してください。</td>
+                  <td><span class="badge ok">表示</span></td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td>輸送計画</td>
+                  <td>機材の輸送計画を立ててください。</td>
+                  <td><span class="badge warn">除外</span></td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td>安全推進</td>
+                  <td>安全推進にヒヤリハットの集計結果を共有してください。</td>
+                  <td><span class="badge ok">表示</span></td>
+                </tr>
+                <tr>
+                  <td>8</td>
+                  <td>安全推進</td>
+                  <td>安全推進のため、保護具の着用を徹底します。</td>
+                  <td><span class="badge warn">除外</span></td>
+                </tr>
+                <tr>
+                  <td>9</td>
+                  <td>一見一様</td>
+                  <td>分析コードごとに一見一様を作成して申請してください。</td>
+                  <td><span class="badge ok">表示</span></td>
+                </tr>
+                <tr>
+                  <td>10</td>
+                  <td>一見一様</td>
+                  <td>各案は一見一様に見えます。</td>
+                  <td><span class="badge warn">除外</span></td>
+                </tr>
+                <tr>
+                  <td>11</td>
+                  <td>均等</td>
+                  <td>均等本部側でダイヤ改正の連絡事項を確認してください。</td>
+                  <td><span class="badge ok">表示</span></td>
+                </tr>
+                <tr>
+                  <td>12</td>
+                  <td>均等</td>
+                  <td>費用を各部門へ均等に配分してください。</td>
+                  <td><span class="badge warn">除外</span></td>
+                </tr>
+                <tr>
+                  <td>13</td>
+                  <td>ボックス</td>
+                  <td>最新版はボックスにアップロードしてください。</td>
+                  <td><span class="badge ok">表示</span></td>
+                </tr>
+                <tr>
+                  <td>14</td>
+                  <td>ボックス</td>
+                  <td>この機能はブラックボックスになっています。</td>
+                  <td><span class="badge warn">除外</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+      </section>
+
+      <section>
+        <p class="section-label">07 · ご相談したいこと</p>
+        <h2>JR のレビューで、辞書と判定を育てる</h2>
+        <div class="card-grid">
+          <article class="card">
+            <h3>正しい使用例</h3>
+            <p>その用語が実際に社内用語として使われている transcript の例。</p>
+          </article>
+          <article class="card">
+            <h3>誤った使用例</h3>
+            <p>同じ文字列が一般語や別の意味で使われている例。</p>
+          </article>
+          <article class="card">
+            <h3>辞書情報</h3>
+            <p>正式名称、分類、表記揺れ、音声認識で起こりやすい表記。</p>
+          </article>
+        </div>
+        <div class="callout" style="margin-top: 18px">
+          <strong>最終目標：</strong> JR
+          の知識を辞書として活用し、会議後に人が行っている検索・照合・確認の負担を減らすこと。
+        </div>
+      </section>
+
+      <footer>
+        JR Term Assistant · Qwen Context Gate · 内部説明用ページ<br />本ページの評価値は、JRレビュー前の小規模な内部試験に基づく暫定値です。
+      </footer>
+    </main>
+  </body>
+</html>

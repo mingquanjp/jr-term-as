@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1600" viewBox="0 0 1600 1600">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#16365f" flood-opacity="0.12"/>
+    </filter>
+    <style>
+      .jp { font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif; fill: #123a66; }
+      .title { font-size: 42px; font-weight: 700; fill: #ffffff; }
+      .section { font-size: 26px; font-weight: 700; fill: #ffffff; }
+      .label { font-size: 22px; font-weight: 700; }
+      .body { font-size: 24px; }
+      .small { font-size: 20px; }
+      .step { font-size: 25px; font-weight: 700; }
+      .stepSmall { font-size: 18px; }
+    </style>
+  </defs>
+
+  <!-- Background and header -->
+  <rect width="1600" height="900" fill="#ffffff"/>
+  <rect x="0" y="0" width="1600" height="116" fill="#073b70"/>
+  <rect x="0" y="116" width="1600" height="8" fill="#c9183f"/>
+  <text x="62" y="75" class="jp title">利用者と想定する場面</text>
+
+  <!-- Persona panel -->
+  <rect x="55" y="165" width="505" height="570" rx="22" fill="#eaf4fc" stroke="#b8d3ea" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="84" y="193" width="250" height="52" rx="26" fill="#073b70"/>
+  <text x="108" y="228" class="jp section" font-size="23">想定利用者</text>
+
+  <text x="105" y="302" class="jp" font-size="45" font-weight="700" fill="#c9183f">田中さん（仮）</text>
+  <text x="107" y="346" class="jp body">JR西日本の社員</text>
+  <text x="107" y="392" class="jp body">会議後のトランスクリプト整理を担当</text>
+
+  <!-- User photo placeholder -->
+  <rect x="105" y="440" width="405" height="245" rx="16" fill="#ffffff" stroke="#8bb3d5" stroke-width="3" stroke-dasharray="10 8"/>
+  <circle cx="306" cy="515" r="38" fill="#d6e7f5" stroke="#7fa7c9" stroke-width="3"/>
+  <path d="M238 630 Q306 557 374 630" fill="#d6e7f5" stroke="#7fa7c9" stroke-width="3"/>
+  <text x="306" y="666" text-anchor="middle" class="jp small" fill="#52718f">ここに人物写真やイラストを配置</text>
+
+  <!-- Situation and workflow -->
+  <rect x="610" y="165" width="935" height="570" rx="22" fill="#ffffff" stroke="#d6e2ee" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="650" y="193" width="415" height="52" rx="26" fill="#073b70"/>
+  <text x="680" y="228" class="jp section" font-size="23">想定する業務の流れ</text>
+
+  <text x="650" y="306" class="jp" font-size="32" font-weight="700">午後：技術系会議が終わったあと</text>
+  <text x="650" y="345" class="jp small" fill="#49657f">田中さんは、会議の内容を整理して共有資料を作成します。</text>
+
+  <!-- Workflow chevrons -->
+  <polygon points="650,395 890,395 950,480 890,565 650,565 705,480" fill="#dcecf8"/>
+  <polygon points="945,395 1185,395 1245,480 1185,565 945,565 1000,480" fill="#c9e1f2"/>
+  <polygon points="1240,395 1480,395 1540,480 1480,565 1240,565 1295,480" fill="#b4d4eb"/>
+
+  <circle cx="735" cy="442" r="25" fill="#073b70"/>
+  <text x="735" y="451" text-anchor="middle" fill="#ffffff" font-size="22" font-weight="700">1</text>
+  <text x="810" y="457" text-anchor="middle" class="jp step">議事内容の確認</text>
+  <text x="810" y="510" text-anchor="middle" class="jp stepSmall">会議の記録を読み返す</text>
+
+  <circle cx="1030" cy="442" r="25" fill="#073b70"/>
+  <text x="1030" y="451" text-anchor="middle" fill="#ffffff" font-size="22" font-weight="700">2</text>
+  <text x="1105" y="457" text-anchor="middle" class="jp step">要約の作成</text>
+  <text x="1105" y="510" text-anchor="middle" class="jp stepSmall">重要な内容を整理する</text>
+
+  <circle cx="1325" cy="442" r="25" fill="#073b70"/>
+  <text x="1325" y="451" text-anchor="middle" fill="#ffffff" font-size="22" font-weight="700">3</text>
+  <text x="1400" y="457" text-anchor="middle" class="jp step">共有資料の準備</text>
+  <text x="1400" y="510" text-anchor="middle" class="jp stepSmall">関係者へ共有する</text>
+
+  <!-- Key message -->
+  <rect x="55" y="770" width="1490" height="92" rx="18" fill="#fff8fa" stroke="#c9183f" stroke-width="3"/>
+  <circle cx="105" cy="816" r="25" fill="#c9183f"/>
+  <text x="105" y="826" text-anchor="middle" fill="#ffffff" font-size="26" font-weight="700">!</text>
+  <text x="155" y="808" class="jp" font-size="25" font-weight="700" fill="#c9183f">ここで確認したいこと</text>
+  <text x="155" y="842" class="jp" font-size="22">会議に含まれる社内用語が、会議の中で何を指しているかを確認する。</text>
+
+  <!-- Footer -->
+  <line x1="650" y1="884" x2="1545" y2="884" stroke="#c9183f" stroke-width="4"/>
+  <text x="60" y="888" class="jp" font-size="16" fill="#5d6f80">JR Term Assistance ｜ HANOI UNIVERSITY OF SCIENCE AND TECHNOLOGY</text>
+  <text x="1510" y="888" text-anchor="end" class="jp" font-size="16" fill="#5d6f80">03</text>
+</svg>
